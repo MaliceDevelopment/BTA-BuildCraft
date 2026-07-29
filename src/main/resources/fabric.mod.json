@@ -5,7 +5,12 @@
 	"name": "Buildcraft",
 	"description": "Extending Minecraft with pipes, auto-crafting, quarries, engines and much more!\\nThis is a port of a Beta 1.7.3 StationAPI port of a release 1.2.5 version of Buildcraft with some additions.",
 	"authors": [
-		"Turnip Labs"
+		"The_Midford",
+		"sunsetsatellite",
+		"uselessbullets",
+		"The BTA! Modding Community",
+		"The StationAPI Porting Team",
+		"The Buildcraft Developer Team"
 	],
 	"contact": {
 		"homepage": "",
