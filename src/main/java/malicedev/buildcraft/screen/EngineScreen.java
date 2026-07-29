@@ -1,0 +1,66 @@
+package malicedev.buildcraft.screen;
+
+import malicedev.buildcraft.block.entity.BaseEngineBlockEntity;
+import malicedev.buildcraft.init.TextureListener;
+import malicedev.buildcraft.packet.RequestSyncedBlockEntityUpdateC2SPacket;
+import malicedev.buildcraft.util.ScreenUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.screen.ScreenHandler;
+import net.modificationstation.stationapi.api.network.packet.PacketHelper;
+
+public abstract class EngineScreen extends BuildcraftScreen{
+    public EngineScreen(ScreenHandler container, Inventory inventory) {
+        super(container, inventory);
+    }
+
+    @Override
+    protected void initLedgers(Inventory inventory) {
+        super.initLedgers(inventory);
+        ledgerManager.add(new EngineLedger((BaseEngineBlockEntity) blockEntity));
+    }
+
+    protected class EngineLedger extends Ledger{
+        BaseEngineBlockEntity engine;
+        int headerColor = 0xE1C92F;
+        int subheaderColor = 0xAAAFB8;
+        int textColor = 0x000000;
+        public EngineLedger(BaseEngineBlockEntity engine){
+            this.engine = engine;
+            maxHeight = 94;
+            overlayColor = 0xD46C1F;
+        }
+
+        @Override
+        public void draw(int x, int y) {
+
+            if(Minecraft.INSTANCE.world != null && Minecraft.INSTANCE.world.isRemote && Minecraft.INSTANCE.world.getTime() % 10 == 0){
+                PacketHelper.send(new RequestSyncedBlockEntityUpdateC2SPacket(blockEntity.x, blockEntity.y, blockEntity.z));
+            }
+
+            drawBackground(x, y);
+            ScreenUtil.drawSprite(TextureListener.energySprite, x + 3, y + 4, 16, 16, zOffset);
+
+
+            if(!isFullyOpened()){
+                return;
+            }
+
+            TranslationStorage translationStorage = TranslationStorage.getInstance();
+
+            textRenderer.drawWithShadow(translationStorage.get("gui.buildcraft.engine.energy"), x + 22, y + 8, headerColor);
+            textRenderer.drawWithShadow(translationStorage.get("gui.buildcraft.engine.current_output") + ":", x + 22, y + 20, subheaderColor);
+            textRenderer.draw(String.format("%.1f MJ/t", engine.getCurrentEnergyOutput()), x + 22, y + 32, textColor);
+            textRenderer.drawWithShadow(translationStorage.get("gui.buildcraft.engine.stored") + ":", x + 22, y + 44, subheaderColor);
+            textRenderer.draw(String.format("%.1f MJ", engine.getEnergyStored()), x + 22, y + 56, textColor);
+            textRenderer.drawWithShadow(translationStorage.get("gui.buildcraft.engine.heat") + ":", x + 22, y + 68, subheaderColor);
+            textRenderer.draw(String.format("%.2f °C", engine.getHeat()), x + 22, y + 80, textColor);
+        }
+
+        @Override
+        public String getTooltip() {
+            return engine.getCurrentEnergyOutput() + " MJ/t";
+        }
+    }
+}

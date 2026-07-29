@@ -1,0 +1,39 @@
+package malicedev.buildcraft.block;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.block.entity.CombustionEngineBlockEntity;
+import malicedev.buildcraft.screen.handler.CombustionEngineScreenHandler;
+import malicedev.nyalib.block.DropInventoryOnBreak;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.gui.screen.container.GuiHelper;
+import net.modificationstation.stationapi.api.util.Identifier;
+
+public class CombustionEngineBlock extends BaseEngineBlock implements DropInventoryOnBreak {
+    public CombustionEngineBlock(Identifier identifier) {
+        super(identifier);
+    }
+
+    @Override
+    protected BlockEntity createBlockEntity() {
+        return new CombustionEngineBlockEntity();
+    }
+
+    @Override
+    public String getBaseTexturePath() {
+        return "/assets/buildcraft/stationapi/textures/block/engine_base_combustion.png";
+    }
+
+    @Override
+    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+        if (world.getBlockEntity(x, y, z) instanceof CombustionEngineBlockEntity engine) {
+            GuiHelper.openGUI(player, Buildcraft.NAMESPACE.id("combustion_engine"), engine, new CombustionEngineScreenHandler(player, engine), (messagePacket -> {
+                messagePacket.ints = new int[]{messagePacket.ints != null ? messagePacket.ints[0] : 0, x, y, z};
+            }));
+            return true;
+        }
+
+        return false;
+    }
+}

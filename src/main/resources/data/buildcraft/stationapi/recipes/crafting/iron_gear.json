@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "igi",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "g": {
+      "tag": "c:gears/stone"
+    }
+  },
+  "result": {
+    "item": "buildcraft:iron_gear"
+  }
+}

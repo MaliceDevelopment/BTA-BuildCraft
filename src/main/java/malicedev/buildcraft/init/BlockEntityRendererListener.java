@@ -1,0 +1,30 @@
+package malicedev.buildcraft.init;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.block.BaseEngineBlock;
+import malicedev.buildcraft.block.entity.*;
+import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
+import malicedev.buildcraft.client.render.block.entity.*;
+import net.mine_diver.unsafeevents.listener.EventListener;
+import net.modificationstation.stationapi.api.client.event.block.entity.BlockEntityRendererRegisterEvent;
+
+public class BlockEntityRendererListener {
+    @EventListener
+    public void registerBlockEntityRenderers(BlockEntityRendererRegisterEvent event){
+        event.renderers.put(ChuteBlockEntity.class, new ChuteBlockEntityRenderer("/assets/buildcraft/stationapi/textures/block/chute_top.png", "/assets/buildcraft/stationapi/textures/block/chute_side.png"));
+        event.renderers.put(GoldenChuteBlockEntity.class, new ChuteBlockEntityRenderer("/assets/buildcraft/stationapi/textures/block/golden_chute_top.png", "/assets/buildcraft/stationapi/textures/block/golden_chute_side.png"));
+        event.renderers.put(RedstoneEngineBlockEntity.class, new EngineBlockEntityRenderer(((BaseEngineBlock)Buildcraft.redstoneEngine).getBaseTexturePath(), ((BaseEngineBlock)Buildcraft.redstoneEngine).getChamberTexturePath(), ((BaseEngineBlock)Buildcraft.redstoneEngine).getTrunkTexturePath()));
+        event.renderers.put(StirlingEngineBlockEntity.class, new EngineBlockEntityRenderer(((BaseEngineBlock)Buildcraft.stirlingEngine).getBaseTexturePath(), ((BaseEngineBlock)Buildcraft.stirlingEngine).getChamberTexturePath(), ((BaseEngineBlock)Buildcraft.stirlingEngine).getTrunkTexturePath()));
+        event.renderers.put(CombustionEngineBlockEntity.class, new EngineBlockEntityRenderer(((BaseEngineBlock)Buildcraft.combustionEngine).getBaseTexturePath(), ((BaseEngineBlock)Buildcraft.combustionEngine).getChamberTexturePath(), ((BaseEngineBlock)Buildcraft.combustionEngine).getTrunkTexturePath()));
+        event.renderers.put(CreativeEngineBlockEntity.class, new EngineBlockEntityRenderer(((BaseEngineBlock)Buildcraft.creativeEngine).getBaseTexturePath(), ((BaseEngineBlock)Buildcraft.creativeEngine).getChamberTexturePath(), ((BaseEngineBlock)Buildcraft.creativeEngine).getTrunkTexturePath()));
+        event.renderers.put(TankBlockEntity.class, new TankBlockEntityRenderer());
+        event.renderers.put(PipeBlockEntity.class, PipeBlockEntityRenderer.INSTANCE);
+        event.renderers.put(LaserBlockEntity.class, LaserBlockEntityRenderer.INSTANCE);
+        event.renderers.put(PathMarkerBlockEntity.class, new PathMarkerBlockEntityRenderer());
+        event.renderers.put(ArchitectTableBlockEntity.class, new AreaWorkerBlockEntityRenderer());
+        event.renderers.put(BuilderBlockEntity.class, new AreaWorkerBlockEntityRenderer());
+        event.renderers.put(QuarryBlockEntity.class, new AreaWorkerBlockEntityRenderer());
+        event.renderers.put(RefineryBlockEntity.class, RefineryBlockEntityRenderer.INSTANCE);
+        event.renderers.put(PumpBlockEntity.class, new PumpBlockEntityRenderer());
+    }
+}

@@ -1,0 +1,112 @@
+package malicedev.buildcraft.block.entity.pipe.parameter;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.api.transport.statement.Statement;
+import malicedev.buildcraft.api.transport.statement.StatementContainer;
+import malicedev.buildcraft.api.transport.statement.StatementMouseClick;
+import malicedev.buildcraft.api.transport.statement.StatementParameter;
+import malicedev.buildcraft.block.entity.pipe.PipeWire;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
+import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
+import net.modificationstation.stationapi.api.util.Identifier;
+
+import java.util.Locale;
+
+public class ActionParameterSignal implements StatementParameter {
+    @Environment(EnvType.CLIENT)
+    private static Atlas.Sprite[] icons;
+
+    public PipeWire color = null;
+
+    public ActionParameterSignal() {
+
+    }
+
+    @Override
+    public Identifier getIdentifier() {
+        return Buildcraft.NAMESPACE.id("pipe_wire_action");
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public Atlas.Sprite getSprite() {
+        if (color == null) {
+            return null;
+        } else {
+            return icons[color.ordinal()];
+        }
+    }
+
+    @Override
+    public ItemStack getItemStack() {
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof ActionParameterSignal param) {
+            return param.color == color;
+        } else {
+            return false;
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void registerTextures() {
+        icons = new Atlas.Sprite[] {
+            Atlases.getGuiItems().addTexture(Buildcraft.NAMESPACE.id("item/trigger/trigger_pipesignal_red_active")),
+            Atlases.getGuiItems().addTexture(Buildcraft.NAMESPACE.id("item/trigger/trigger_pipesignal_blue_active")),
+            Atlases.getGuiItems().addTexture(Buildcraft.NAMESPACE.id("item/trigger/trigger_pipesignal_green_active")),
+            Atlases.getGuiItems().addTexture(Buildcraft.NAMESPACE.id("item/trigger/trigger_pipesignal_yellow_active"))
+        };
+    }
+
+    @Override
+    public String getDescription() {
+        if (color == null) {
+            return null;
+        }
+        return String.format(TranslationStorage.getInstance().get("gate.buildcraft.action.pipe.wire"), TranslationStorage.getInstance().get("color." + color.name().toLowerCase(Locale.ENGLISH)));
+    }
+
+    @SuppressWarnings("NonStrictComparisonCanBeEquality")
+    @Override
+    public void click(StatementContainer source, Statement stmt, ItemStack stack, StatementMouseClick mouse) {
+        int maxColor = 4;
+
+        if (color == null) {
+            color = mouse.getButton() == 0 ? PipeWire.RED : PipeWire.values()[maxColor - 1];
+        } else if (color == (mouse.getButton() == 0 ? PipeWire.values()[maxColor - 1] : PipeWire.RED)) {
+            color = null;
+        } else {
+            do {
+                color = PipeWire.values()[(mouse.getButton() == 0 ? color.ordinal() + 1 : color.ordinal() - 1) & 3];
+            } while (color.ordinal() >= maxColor);
+        }
+    }
+
+    @Override
+    public void readNBT(NbtCompound nbt) {
+        if (nbt.contains("color")) {
+            color = PipeWire.values()[nbt.getByte("color")];
+        }
+    }
+
+    @Override
+    public void writeNBT(NbtCompound nbt) {
+        if (color != null) {
+            nbt.putByte("color", (byte) color.ordinal());
+        }
+    }
+
+    @Override
+    public StatementParameter rotateLeft() {
+        return this;
+    }
+}

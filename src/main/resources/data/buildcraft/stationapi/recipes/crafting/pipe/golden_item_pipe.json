@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "igi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "g": {
+      "tag": "c:glass_blocks/colorless"
+    }
+  },
+  "result": {
+    "item": "buildcraft:golden_item_pipe",
+    "count": 8
+  }
+}

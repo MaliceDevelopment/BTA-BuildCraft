@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=west": {
+      "model": "buildcraft:block/builder"
+    },
+    "facing=north": {
+      "model": "buildcraft:block/builder",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "buildcraft:block/builder",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "buildcraft:block/builder",
+      "y": 270
+    }
+  }
+}

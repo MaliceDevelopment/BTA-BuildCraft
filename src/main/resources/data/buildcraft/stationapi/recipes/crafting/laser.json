@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "orr",
+    "ddr",
+    "orr"
+  ],
+  "key": {
+    "o": {
+      "tag": "c:obsidians/normal"
+    },
+    "r": {
+      "tag": "c:dusts/redstone"
+    },
+    "d": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "buildcraft:laser"
+  }
+}

@@ -1,0 +1,168 @@
+package malicedev.buildcraft.client.render.block;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.block.PipeBlock;
+import malicedev.buildcraft.block.RenderBlock;
+import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
+import malicedev.buildcraft.block.entity.pipe.pluggable.PipePluggable;
+import malicedev.buildcraft.block.entity.pipe.behavior.StructurePipeBehavior;
+import malicedev.buildcraft.client.render.PipePluggableRenderer;
+import malicedev.buildcraft.client.render.PipeRenderState;
+import malicedev.buildcraft.config.Config;
+import malicedev.buildcraft.init.TextureListener;
+import malicedev.buildcraft.util.ColorUtil;
+import malicedev.buildcraft.util.Constants;
+import malicedev.buildcraft.util.RenderHelper;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.world.BlockView;
+import net.modificationstation.stationapi.api.util.math.Direction;
+
+
+public class PipeWorldRenderer {
+    public static float zFightOffset = 1F / 4096F;
+    public void renderPipe(BlockRenderManager blockRenderManager, BlockView blockView, PipeBlockEntity pipeBlockEntity, int x, int y, int z){
+        PipeRenderState state = pipeBlockEntity.renderState;
+        RenderBlock renderBlock = Buildcraft.renderBlock;
+        int renderPass = RenderHelper.currentRenderPass;
+        int glassColor = pipeBlockEntity.getPipeColor();
+
+        if(renderPass == 0 || (glassColor >= 0 && !(pipeBlockEntity.behavior instanceof StructurePipeBehavior))){
+            int connectivity = state.pipeConnectionMatrix.getMask();
+            float[] dim = new float[6];
+
+            if(renderPass == 1 || (pipeBlockEntity.behavior instanceof StructurePipeBehavior && glassColor >= 0)){
+                renderBlock.setColor(ColorUtil.getColor(glassColor));
+            }
+
+            if(connectivity != 0x3F){
+                resetToCenterDimensions(dim);
+
+                if(renderPass == 0){
+                    renderBlock.setTextureIdentifier(state.textureMatrix.getTextureIdentifier(null));
+                } else {
+                    renderBlock.setTextureIdentifier(TextureListener.pipeStainedOverlay);
+                }
+
+                fixForRenderPass(dim, renderPass);
+
+                renderTwoWayBlock(blockRenderManager, renderBlock, x, y, z, dim, connectivity ^ 0x3F);
+            }
+
+            for(int dir = 0; dir < 6; dir++){
+                int mask = 1 << dir;
+
+                if((connectivity & mask) == 0){
+                    continue;
+                }
+
+                resetToCenterDimensions(dim);
+
+                dim[dir / 2] = dir % 2 == 0 ? 0 : Constants.PIPE_MAX_POS;
+                dim[dir / 2 + 3] = dir % 2 == 0 ? Constants.PIPE_MIN_POS : 1;
+
+                int renderMask = (3 << (dir & 0x6)) ^ 0x3f;
+
+                fixForRenderPass(dim, renderPass);
+
+                if(renderPass == 0){
+                    renderBlock.setTextureIdentifier(state.textureMatrix.getTextureIdentifier(Direction.byId(dir)));
+                } else {
+                    renderBlock.setTextureIdentifier(TextureListener.pipeStainedOverlay);
+                }
+
+                renderTwoWayBlock(blockRenderManager, renderBlock, x, y, z, dim, renderMask);
+
+                if(Minecraft.INSTANCE.options.fancyGraphics){
+                    Direction side = Direction.byId(dir);
+                    int px = x + side.getOffsetX();
+                    int py = y + side.getOffsetY();
+                    int pz = z + side.getOffsetZ();
+                    Block block = Block.BLOCKS[blockView.getBlockId(px, py, pz)];
+                    if(!(block instanceof PipeBlock) && !block.isOpaque()){
+                        double[] blockBB;
+                        block.updateBoundingBox(blockView, px, py, pz);
+
+                        blockBB = new double[]{
+                                block.minX,
+                                block.minX,
+                                block.minZ,
+                                block.maxY,
+                                block.maxX,
+                                block.maxZ
+                        };
+
+                        if((dir % 2 == 1 && blockBB[dir / 2] != 0) || (dir % 2 == 0 && blockBB[dir / 2 + 3] != 1)){
+                            resetToCenterDimensions(dim);
+
+                            if (dir % 2 == 1) {
+                                dim[dir / 2] = 0;
+                                dim[dir / 2 + 3] = (float) blockBB[dir / 2];
+                            } else {
+                                dim[dir / 2] = (float) blockBB[dir / 2 + 3];
+                                dim[dir / 2 + 3] = 1;
+                            }
+
+                            fixForRenderPass(dim, renderPass);
+
+                            renderTwoWayBlock(blockRenderManager, renderBlock, px, py, pz, dim, renderMask);
+                        }
+                    }
+                }
+            }
+            renderBlock.setColor(0xFFFFFF);
+        }
+        renderBlock.setBoundingBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+
+        for(Direction direction : Direction.values()){
+            if(pipeBlockEntity.hasPipePluggable(direction)){
+                PipePluggable p = pipeBlockEntity.getPipePluggable(direction);
+                PipePluggableRenderer r = p.getRenderer();
+                if(r != null){
+                    r.renderPluggable(blockRenderManager, pipeBlockEntity, direction, p, x, y, z);
+                }
+            }
+        }
+    }
+
+    private void resetToCenterDimensions(float[] dim){
+        for (int i = 0; i < 3; i++) {
+            dim[i] = Constants.PIPE_MIN_POS;
+            dim[i + 3] = Constants.PIPE_MAX_POS;
+        }
+    }
+
+    private void fixForRenderPass(float[] dim, int renderPass) {
+        if (renderPass == 1) {
+            for (int i = 0; i < 3; i++) {
+                dim[i] += zFightOffset;
+            }
+
+            for (int i = 3; i < 6; i++) {
+                dim[i] -= zFightOffset;
+            }
+        }
+    }
+
+    private void renderTwoWayBlock(BlockRenderManager blockRenderManager, RenderBlock stateHost, int x, int y, int z, float[] dim, int mask) {
+        assert mask != 0;
+
+        int c = stateHost.getColor(0);
+        float r = ((c & 0xFF0000) >> 16) / 255.0f;
+        float g = ((c & 0x00FF00) >> 8) / 255.0f;
+        float b = (c & 0x0000FF) / 255.0f;
+
+        stateHost.setRenderMask(mask);
+        stateHost.setBoundingBox(dim[2], dim[0], dim[1], dim[5], dim[3], dim[4]);
+        blockRenderManager.renderFlat(stateHost, x, y, z, r, g, b);
+
+        if(Config.PIPE_CONFIG.renderInnerPipe && RenderHelper.currentRenderPass == 0){
+            stateHost.setRenderMask((mask & 0x15) << 1 | (mask & 0x2a) >> 1); // pairwise swapped mask
+            stateHost.setBoundingBox(dim[5], dim[3], dim[4], dim[2], dim[0], dim[1]);
+            blockRenderManager.renderFlat(stateHost, x, y, z, r * 0.67f, g * 0.67f, b * 0.67f);
+        }
+
+        stateHost.setRenderAllSides();
+    }
+}

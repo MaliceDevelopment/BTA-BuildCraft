@@ -1,0 +1,17 @@
+{
+  "values": [
+    "buildcraft:chute",
+    "buildcraft:golden_chute",
+    "buildcraft:mining_well",
+    "buildcraft:quarry",
+    "buildcraft:pump",
+    "buildcraft:flood_gate",
+    "buildcraft:refinery",
+    "buildcraft:filler",
+    "buildcraft:builder",
+    "buildcraft:architect_table",
+    "buildcraft:blueprint_library",
+    "buildcraft:stirling_engine",
+    "buildcraft:combustion_engine"
+  ]
+}

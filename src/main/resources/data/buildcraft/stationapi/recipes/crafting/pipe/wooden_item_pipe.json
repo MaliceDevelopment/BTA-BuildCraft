@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wgw"
+  ],
+  "key": {
+    "w": {
+      "tag": "c:planks"
+    },
+    "g": {
+      "tag": "c:glass_blocks/colorless"
+    }
+  },
+  "result": {
+    "item": "buildcraft:wooden_item_pipe",
+    "count": 8
+  }
+}

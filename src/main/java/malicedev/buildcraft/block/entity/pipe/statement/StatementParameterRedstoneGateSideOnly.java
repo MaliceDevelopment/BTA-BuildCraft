@@ -1,0 +1,74 @@
+package malicedev.buildcraft.block.entity.pipe.statement;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.api.transport.statement.Statement;
+import malicedev.buildcraft.api.transport.statement.StatementContainer;
+import malicedev.buildcraft.api.transport.statement.StatementMouseClick;
+import malicedev.buildcraft.api.transport.statement.StatementParameter;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.resource.language.TranslationStorage;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
+import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
+import net.modificationstation.stationapi.api.util.Identifier;
+
+public class StatementParameterRedstoneGateSideOnly implements StatementParameter {
+    @Environment(EnvType.CLIENT)
+    private static Atlas.Sprite icon;
+    public boolean isOn = false;
+
+    @Override
+    public Identifier getIdentifier() {
+        return Buildcraft.NAMESPACE.id("redstoneGateSideOnly");
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public Atlas.Sprite getSprite() {
+        if (!isOn) {
+            return null;
+        } else {
+            return icon;
+        }
+    }
+
+    @Override
+    public ItemStack getItemStack() {
+        return null;
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void registerTextures() {
+        icon = Atlases.getGuiItems().addTexture(Buildcraft.NAMESPACE.id("item/trigger/redstone_gate_side_only"));
+    }
+
+    @Override
+    public String getDescription() {
+        return isOn ? TranslationStorage.getInstance().get("gate.buildcraft.parameter.redstone.gateSideOnly") : "";
+    }
+
+    @Override
+    public void click(StatementContainer source, Statement stmt, ItemStack stack, StatementMouseClick mouse) {
+        isOn = !isOn;
+    }
+
+    @Override
+    public void readNBT(NbtCompound nbt) {
+        if (nbt.contains("isOn")) {
+            isOn = nbt.getByte("isOn") == 1;
+        }
+    }
+
+    @Override
+    public void writeNBT(NbtCompound nbt) {
+        nbt.putByte("isOn", isOn ? (byte) 1 : (byte) 0);
+    }
+
+    @Override
+    public StatementParameter rotateLeft() {
+        return this;
+    }
+}

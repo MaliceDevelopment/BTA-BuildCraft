@@ -1,0 +1,237 @@
+package malicedev.buildcraft.block.entity;
+
+import malicedev.buildcraft.api.core.Position;
+import malicedev.buildcraft.api.core.Serializable;
+import malicedev.buildcraft.block.entity.pipe.LaserData;
+import malicedev.buildcraft.entity.RobotEntity;
+import malicedev.buildcraft.util.Constants;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public abstract class AreaWorkerBlockEntity extends SyncedBlockEntity {
+    public WorkingArea workingArea;
+    public RobotEntity robot;
+    public int minHeight = 1;
+
+    public AreaWorkerBlockEntity() {
+    }
+
+    public boolean renderWorkingArea() {
+        return true;
+    }
+
+    public void constructWorkingArea(LandMarkerBlockEntity.Origin origin) {
+        this.constructWorkingArea(origin.xMin, origin.yMin, origin.zMin, origin.xMax, origin.yMax, origin.zMax);
+    }
+
+    public void constructWorkingArea(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+        workingArea = new WorkingArea(this, minX, minY, minZ, maxX, maxY, maxZ);
+        sendNetworkUpdate();
+    }
+
+    public void destroyWorkingArea() {
+        workingArea = null;
+    }
+
+    @Override
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+
+        if (workingArea != null) {
+            NbtCompound workingAreaNbt = new NbtCompound();
+            workingArea.writeNbt(workingAreaNbt);
+            nbt.put("workingArea", workingAreaNbt);
+        }
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+
+        if (nbt.contains("workingArea")) {
+            workingArea = new WorkingArea();
+            workingArea.readNbt(nbt.getCompound("workingArea"));
+        }
+    }
+
+    public void setRobot(RobotEntity robot){
+        this.robot = robot;
+    }
+
+    public void createRobot(){
+        double posX = (double) (workingArea.maxX - workingArea.minX) / 2;
+        double posY = (double) (workingArea.maxY - workingArea.minY) / 2;
+        double posZ = (double) (workingArea.maxZ - workingArea.minZ) / 2;
+
+        RobotEntity robotEntity = new RobotEntity(world, this);
+
+        robotEntity.setPositionAndAngles(workingArea.minX + posX, workingArea.minY + posY, workingArea.minZ +  posZ, 0f, 0f);
+
+        world.spawnEntity(robotEntity);
+        setRobot(robotEntity);
+    }
+
+    public void destroyRobot(){
+        if(robot != null){
+            robot.markDead();
+        }
+        robot = null;
+    }
+
+    public void setRobotTarget(BlockPos blockPos){
+        setRobotTarget(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+    }
+
+    public void setRobotTarget(int x, int y, int z){
+        if(this.robot != null){
+            robot.setLaserTarget(x, y, z);
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    public String getLaserTexture(){
+        return Constants.LASER_TEXTURES[4];
+    }
+
+    @Override
+    public void writeData(DataOutputStream stream) throws IOException {
+        workingArea.writeData(stream);
+    }
+
+    @Override
+    public void readData(DataInputStream stream) throws IOException {
+        if(workingArea == null) {
+            workingArea = new WorkingArea();
+        }
+        workingArea.readData(stream);
+    }
+
+    public static class WorkingArea implements Serializable {
+        public int minX;
+        public int minY;
+        public int minZ;
+        public int maxX;
+        public int maxY;
+        public int maxZ;
+        public boolean hasLasers = false;
+        public final ArrayList<LaserData> lasers = new ArrayList<>();
+
+        public WorkingArea() {
+        }
+
+        public WorkingArea(AreaWorkerBlockEntity areaWorker, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+            this.minX = minX;
+            this.minY = minY;
+            this.minZ = minZ;
+            this.maxX = maxX;
+            this.maxY = maxY;
+            this.maxZ = maxZ;
+
+            if (this.minY + (areaWorker.minHeight - 1) > this.maxY) {
+                this.maxY = this.minY + (areaWorker.minHeight - 1);
+            }
+
+            constructLasers();
+        }
+
+        public void constructLasers() {
+            // Bottom Frame
+            addLaser(minX, minY, minZ, maxX, minY, minZ);
+            addLaser(minX, minY, minZ, minX, minY, maxZ);
+            addLaser(maxX, minY, minZ, maxX, minY, maxZ);
+            addLaser(minX, minY, maxZ, maxX, minY, maxZ);
+
+            if (minY != maxY) {
+                // Pillars
+                addLaser(minX, minY, minZ, minX, maxY, minZ);
+                addLaser(maxX, minY, minZ, maxX, maxY, minZ);
+                addLaser(minX, minY, maxZ, minX, maxY, maxZ);
+                addLaser(maxX, minY, maxZ, maxX, maxY, maxZ);
+
+                // Top Frame
+                addLaser(minX, maxY, minZ, maxX, maxY, minZ);
+                addLaser(minX, maxY, minZ, minX, maxY, maxZ);
+                addLaser(maxX, maxY, minZ, maxX, maxY, maxZ);
+                addLaser(minX, maxY, maxZ, maxX, maxY, maxZ);
+            }
+        }
+
+        public void addLaser(int startX, int startY, int startZ, int endX, int endY, int endZ) {
+            lasers.add(new LaserData(new Position(startX, startY, startZ), new Position(endX, endY, endZ)));
+            hasLasers = true;
+        }
+
+        public void clearLasers() {
+            lasers.clear();
+            hasLasers = false;
+        }
+
+        public void writeNbt(NbtCompound nbt) {
+            nbt.putInt("minX", minX);
+            nbt.putInt("minY", minY);
+            nbt.putInt("minZ", minZ);
+            nbt.putInt("maxX", maxX);
+            nbt.putInt("maxY", maxY);
+            nbt.putInt("maxZ", maxZ);
+        }
+
+        public void readNbt(NbtCompound nbt) {
+            minX = nbt.getInt("minX");
+            minY = nbt.getInt("minY");
+            minZ = nbt.getInt("minZ");
+            maxX = nbt.getInt("maxX");
+            maxY = nbt.getInt("maxY");
+            maxZ = nbt.getInt("maxZ");
+
+            constructLasers();
+        }
+
+        public int sizeX() {
+            return maxX - minX + 1;
+        }
+
+        public int sizeY() {
+            return maxY - minY + 1;
+        }
+
+        public int sizeZ() {
+            return maxZ - minZ + 1;
+        }
+
+        @Override
+        public void writeData(DataOutputStream stream) throws IOException {
+            stream.writeInt(minX);
+            stream.writeInt(minY);
+            stream.writeInt(minZ);
+            stream.writeInt(maxX);
+            stream.writeInt(maxY);
+            stream.writeInt(maxZ);
+            stream.writeBoolean(hasLasers);
+        }
+
+        @Override
+        public void readData(DataInputStream stream) throws IOException {
+            minX = stream.readInt();
+            minY = stream.readInt();
+            minZ = stream.readInt();
+            maxX = stream.readInt();
+            maxY = stream.readInt();
+            maxZ = stream.readInt();
+            hasLasers = stream.readBoolean();
+
+            if(hasLasers) {
+                constructLasers();
+            } else {
+                clearLasers();
+            }
+        }
+    }
+}

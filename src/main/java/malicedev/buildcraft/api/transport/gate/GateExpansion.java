@@ -1,0 +1,19 @@
+package malicedev.buildcraft.api.transport.gate;
+
+import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
+import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
+import net.modificationstation.stationapi.api.util.Identifier;
+
+public interface GateExpansion {
+    Identifier getIdentifier();
+
+    String getDisplayName();
+
+    GateExpansionController makeController(PipeBlockEntity pipe);
+
+    void registerTextures();
+
+    Atlas.Sprite getOverlayBlockSprite();
+
+    Atlas.Sprite getOverlayItemSprite();
+}

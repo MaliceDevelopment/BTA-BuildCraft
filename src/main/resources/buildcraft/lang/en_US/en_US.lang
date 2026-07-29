@@ -1,0 +1,297 @@
+item.buildcraft.wrench.name=Wrench
+item.buildcraft.wooden_gear.name=Wooden Gear
+item.buildcraft.stone_gear.name=Stone Gear
+item.buildcraft.iron_gear.name=Iron Gear
+item.buildcraft.golden_gear.name=Golden Gear
+item.buildcraft.diamond_gear.name=Diamond Gear
+item.buildcraft.template.name=Template
+item.buildcraft.blueprint.name=Blueprint
+item.buildcraft.pipe_sealant.name=Pipe Sealant
+
+item.buildcraft.red_pipe_wire.name=Red Pipe Wire
+item.buildcraft.blue_pipe_wire.name=Blue Pipe Wire
+item.buildcraft.green_pipe_wire.name=Green Pipe Wire
+item.buildcraft.yellow_pipe_wire.name=Yellow Pipe Wire
+
+
+item.buildcraft.gate_copier.name=Gate Copier
+item.buildcraft.redstone_chipset.name=Redstone Chipset
+item.buildcraft.redstone_iron_chipset.name=Redstone Iron Chipset
+item.buildcraft.redstone_golden_chipset.name=Redstone Golden Chipset
+item.buildcraft.redstone_diamond_chipset.name=Redstone Diamond Chipset
+item.buildcraft.redstone_emerald_chipset.name=Redstone Emerald Chipset
+item.buildcraft.redstone_glowstone_chipset.name=Redstone Glowstone Chipset
+item.buildcraft.redstone_comp_chipset.name=Redstone Comp Chipset
+item.buildcraft.pulsating_chipset.name=Pulsating Chipset
+
+item.buildcraft.clean_paintbrush.name=Clean Paintbrush
+item.buildcraft.black_paintbrush.name=Black Paintbrush
+item.buildcraft.red_paintbrush.name=Red Paintbrush
+item.buildcraft.green_paintbrush.name=Green Paintbrush
+item.buildcraft.brown_paintbrush.name=Brown Paintbrush
+item.buildcraft.blue_paintbrush.name=Blue Paintbrush
+item.buildcraft.purple_paintbrush.name=Purple Paintbrush
+item.buildcraft.cyan_paintbrush.name=Cyan Paintbrush
+item.buildcraft.light_gray_paintbrush.name=Light Gray Paintbrush
+item.buildcraft.gray_paintbrush.name=Gray Paintbrush
+item.buildcraft.pink_paintbrush.name=Pink Paintbrush
+item.buildcraft.lime_paintbrush.name=Lime Paintbrush
+item.buildcraft.yellow_paintbrush.name=Yellow Paintbrush
+item.buildcraft.light_blue_paintbrush.name=Light Blue Paintbrush
+item.buildcraft.magenta_paintbrush.name=Magenta Paintbrush
+item.buildcraft.orange_paintbrush.name=Orange Paintbrush
+item.buildcraft.white_paintbrush.name=White Paintbrush
+
+item.buildcraft.black_lens.name=Black Lens
+item.buildcraft.red_lens.name=Red Lens
+item.buildcraft.green_lens.name=Green Lens
+item.buildcraft.brown_lens.name=Brown Lens
+item.buildcraft.blue_lens.name=Blue Lens
+item.buildcraft.purple_lens.name=Purple Lens
+item.buildcraft.cyan_lens.name=Cyan Lens
+item.buildcraft.light_gray_lens.name=Light Gray Lens
+item.buildcraft.gray_lens.name=Gray Lens
+item.buildcraft.pink_lens.name=Pink Lens
+item.buildcraft.lime_lens.name=Lime Lens
+item.buildcraft.yellow_lens.name=Yellow Lens
+item.buildcraft.light_blue_lens.name=Light Blue Lens
+item.buildcraft.magenta_lens.name=Magenta Lens
+item.buildcraft.orange_lens.name=Orange Lens
+item.buildcraft.white_lens.name=White Lens
+
+item.buildcraft.black_filter.name=Black Filter
+item.buildcraft.red_filter.name=Red Filter
+item.buildcraft.green_filter.name=Green Filter
+item.buildcraft.brown_filter.name=Brown Filter
+item.buildcraft.blue_filter.name=Blue Filter
+item.buildcraft.purple_filter.name=Purple Filter
+item.buildcraft.cyan_filter.name=Cyan Filter
+item.buildcraft.light_gray_filter.name=Light Gray Filter
+item.buildcraft.gray_filter.name=Gray Filter
+item.buildcraft.pink_filter.name=Pink Filter
+item.buildcraft.lime_filter.name=Lime Filter
+item.buildcraft.yellow_filter.name=Yellow Filter
+item.buildcraft.light_blue_filter.name=Light Blue Filter
+item.buildcraft.magenta_filter.name=Magenta Filter
+item.buildcraft.orange_filter.name=Orange Filter
+item.buildcraft.white_filter.name=White Filter
+
+item.buildcraft.plug.name=Pipe Plug
+
+tile.buildcraft.chute.name=Chute
+tile.buildcraft.golden_chute.name=Golden Chute
+tile.buildcraft.auto_workbench.name=Auto Workbench
+tile.buildcraft.mining_well.name=Mining Well
+tile.buildcraft.quarry.name=Quarry
+tile.buildcraft.pump.name=Pump
+tile.buildcraft.flood_gate.name=Flood Gate
+tile.buildcraft.tank.name=Tank
+tile.buildcraft.refinery.name=Refinery
+tile.buildcraft.laser.name=Laser
+tile.buildcraft.assembly_table.name=Assembly Table
+tile.buildcraft.integration_table.name=Integration Table
+tile.buildcraft.filler.name=Filler
+tile.buildcraft.builder.name=Builder
+tile.buildcraft.architect_table.name=Architect Table
+tile.buildcraft.blueprint_library.name=Blueprint Library
+tile.buildcraft.land_marker.name=Land Marker
+tile.buildcraft.path_marker.name=Path Marker
+tile.buildcraft.redstone_engine.name=Redstone Engine
+tile.buildcraft.stirling_engine.name=Stirling Engine
+tile.buildcraft.combustion_engine.name=Combustion Engine
+tile.buildcraft.creative_engine.name=Creative Engine
+
+tile.buildcraft.mining_pipe.name=Mining Pipe
+tile.buildcraft.frame.name=Frame
+
+tile.buildcraft.cobblestone_structure_pipe.name=Cobblestone Structure Pipe
+
+tile.buildcraft.wooden_item_pipe.name=Wooden Transport Pipe
+tile.buildcraft.cobblestone_item_pipe.name=Cobblestone Transport Pipe
+tile.buildcraft.stone_item_pipe.name=Stone Transport Pipe
+tile.buildcraft.iron_item_pipe.name=Iron Transport Pipe
+tile.buildcraft.sandstone_item_pipe.name=Sandstone Transport Pipe
+tile.buildcraft.golden_item_pipe.name=Golden Transport Pipe
+tile.buildcraft.diamond_item_pipe.name=Diamond Transport Pipe
+tile.buildcraft.obsidian_item_pipe.name=Obsidian Transport Pipe
+tile.buildcraft.clay_item_pipe.name=Clay Transport Pipe
+tile.buildcraft.void_item_pipe.name=Void Item Pipe
+
+tile.buildcraft.wooden_fluid_pipe.name=Wooden Fluid Pipe
+tile.buildcraft.cobblestone_fluid_pipe.name=Cobblestone Fluid Pipe
+tile.buildcraft.stone_fluid_pipe.name=Stone Fluid Pipe
+tile.buildcraft.iron_fluid_pipe.name=Iron Fluid Pipe
+tile.buildcraft.sandstone_fluid_pipe.name=Sandstone Fluid Pipe
+tile.buildcraft.golden_fluid_pipe.name=Golden Fluid Pipe
+tile.buildcraft.diamond_fluid_pipe.name=Diamond Fluid Pipe
+tile.buildcraft.void_fluid_pipe.name=Void Fluid Pipe
+
+tile.buildcraft.wooden_energy_pipe.name=Wooden Kinesis Pipe
+tile.buildcraft.cobblestone_energy_pipe.name=Cobblestone Kinesis Pipe
+tile.buildcraft.stone_energy_pipe.name=Stone Kinesis Pipe
+tile.buildcraft.iron_energy_pipe.name=Iron Kinesis Pipe
+tile.buildcraft.sandstone_energy_pipe.name=Sandstone Kinesis Pipe
+tile.buildcraft.golden_energy_pipe.name=Golden Kinesis Pipe
+tile.buildcraft.diamond_energy_pipe.name=Diamond Kinesis Pipe
+
+fluid.buildcraft.oil.name=Oil
+fluid.buildcraft.fuel.name=Fuel
+
+facade.buildcraft.normal.name=Facade
+facade.buildcraft.hollow.name=Hollow Facade
+
+tooltip.buildcraft.gate.expansions=Installed Expansions:
+gate.buildcraft.expansion.light_sensor=Light Sensor
+gate.buildcraft.expansion.pulsar=Autarchic Pulsar
+gate.buildcraft.expansion.timer=Clock Timer
+gate.buildcraft.expansion.fader=Redstone Fader
+
+gate.buildcraft.name=%s %s Gate
+gate.buildcraft.basic.name=Basic Gate
+
+gate.buildcraft.material.redstone=Basic
+gate.buildcraft.material.iron=Iron
+gate.buildcraft.material.gold=Gold
+gate.buildcraft.material.diamond=Diamond
+gate.buildcraft.material.glowstone=Glowstone
+gate.buildcraft.material.emerald=Emerald
+
+gate.buildcraft.logic.and=AND
+gate.buildcraft.logic.or=OR
+
+gate.buildcraft.action.extraction=%s Extraction Preset
+gate.buildcraft.action.pipe.item.color=Paint Items %s
+gate.buildcraft.action.machine.on=On
+gate.buildcraft.action.machine.off=Off
+gate.buildcraft.action.machine.loop=Loop
+gate.buildcraft.action.pulsar.constant=Energy Pulsar
+gate.buildcraft.action.pulsar.single=Single Energy Pulse
+gate.buildcraft.action.pipe.wire=%s Pipe Signal
+gate.buildcraft.action.redstone.signal=Redstone Signal
+gate.buildcraft.action.robot.goto_station=Goto Station
+gate.buildcraft.action.pipe.valve.open=Open
+gate.buildcraft.action.pipe.valve.input_only=Input Only
+gate.buildcraft.action.pipe.valve.output_only=Output Only
+gate.buildcraft.action.pipe.valve.closed=Closed
+gate.buildcraft.action.station.provide_items=Provide Items
+gate.buildcraft.action.station.accept_items=Accept Items
+gate.buildcraft.action.station.request_items=Request Items
+gate.buildcraft.action.station.drop_items_in_pipe=Drop Items In Pipe
+gate.buildcraft.action.station.allow_craft=Allow Craft
+gate.buildcraft.action.station.provide_machine_request=Request Needed Items
+gate.buildcraft.action.station.accept_fluids=Accept Fluids
+gate.buildcraft.action.station.povide_fluids=Provide Fluids
+gate.buildcraft.action.robot.work_in_area=Work in Area
+gate.buildcraft.action.robot.load_unload_area=Load/Unload in Area
+gate.buildcraft.action.robot.wakeup=Wake Up
+gate.buildcraft.action.station.forbid_robot=Forbid Robot
+gate.buildcraft.action.station.force_robot=Force Robot
+gate.buildcraft.action.robot.filter=Filter
+gate.buildcraft.action.robot.filter_tool=Filter Tool
+gate.buildcraft.action.pipe_direction.down=Down Pipe Direction
+gate.buildcraft.action.pipe_direction.up=Up Pipe Direction
+gate.buildcraft.action.pipe_direction.north=South Pipe Direction
+gate.buildcraft.action.pipe_direction.east=North Pipe Direction
+gate.buildcraft.action.pipe_direction.south=West Pipe Direction
+gate.buildcraft.action.pipe_direction.west=East Pipe Direction
+
+gate.buildcraft.parameter.redstone.gateSideOnly=Gate Side Only
+
+gate.buildcraft.trigger.engine.blue=Engine Blue
+gate.buildcraft.trigger.engine.green=Engine Green
+gate.buildcraft.trigger.engine.yellow=Engine Yellow
+gate.buildcraft.trigger.engine.red=Engine Red
+gate.buildcraft.trigger.engine.overheat=Engine Overheat
+gate.buildcraft.trigger.fluid.empty=Tank Empty
+gate.buildcraft.trigger.fluid.contains=Fluid in Tank
+gate.buildcraft.trigger.fluid.space=Space for Fluid
+gate.buildcraft.trigger.fluid.full=Tank Full
+gate.buildcraft.trigger.fluidlevel.below=Contains < %d%%
+gate.buildcraft.trigger.inventory.empty=Inventory Empty
+gate.buildcraft.trigger.inventory.contains=Items in Inventory
+gate.buildcraft.trigger.inventory.space=Space in Inventory
+gate.buildcraft.trigger.inventory.full=Inventory Full
+gate.buildcraft.trigger.inventorylevel.below=Contains < %d%%
+gate.buildcraft.trigger.machine.done=Work Done
+gate.buildcraft.trigger.machine.scheduled=Has Work
+gate.buildcraft.trigger.redstone.input.active=Redstone Signal On
+gate.buildcraft.trigger.redstone.input.inactive=Redstone Signal Off
+gate.buildcraft.trigger.redstone.input.level=Redstone Level %d
+gate.buildcraft.trigger.pipe.empty=Pipe Empty
+gate.buildcraft.trigger.pipe.containsItems=Items Traversing
+gate.buildcraft.trigger.pipe.containsFluids=Fluid Traversing
+gate.buildcraft.trigger.pipe.containsEnergy=Power Traversing
+gate.buildcraft.trigger.pipe.requestsEnergy=Power Requested
+gate.buildcraft.trigger.pipe.tooMuchEnergy=Power Overloaded
+gate.buildcraft.trigger.pipe.wire.active=%s Pipe Signal On
+gate.buildcraft.trigger.pipe.wire.inactive=%s Pipe Signal Off
+gate.buildcraft.trigger.timer=%s Sec Timer
+gate.buildcraft.trigger.robot.sleep=Sleep
+gate.buildcraft.trigger.robot.in.station=Robot In Station
+gate.buildcraft.trigger.robot.linked=Station Linked
+gate.buildcraft.trigger.robot.reserved=Station Reserved
+gate.buildcraft.trigger.machine.energyStored.high=High Energy Stored
+gate.buildcraft.trigger.machine.energyStored.low=Low Energy Stored
+gate.buildcraft.trigger.machine.energyStored.below25=Energy < 25%
+gate.buildcraft.trigger.machine.energyStored.below50=Energy < 50%
+gate.buildcraft.trigger.machine.energyStored.below75=Energy < 75%
+gate.buildcraft.trigger.light.bright=Bright
+gate.buildcraft.trigger.light.dark=Dark
+gate.buildcraft.trigger.time.0=Night
+gate.buildcraft.trigger.time.6=Morning
+gate.buildcraft.trigger.time.12=Afternoon
+gate.buildcraft.trigger.time.18=Evening
+
+color.buildcraft.black=Black
+color.buildcraft.blue=Blue
+color.buildcraft.brown=Brown
+color.buildcraft.cyan=Cyan
+color.buildcraft.gray=Gray
+color.buildcraft.green=Green
+color.buildcraft.light.blue=Light Blue
+color.buildcraft.light.gray=Light Gray
+color.buildcraft.lime=Lime
+color.buildcraft.magenta=Magenta
+color.buildcraft.orange=Orange
+color.buildcraft.pink=Pink
+color.buildcraft.purple=Purple
+color.buildcraft.red=Red
+color.buildcraft.white=White
+color.buildcraft.yellow=Yellow
+
+controlmode.buildcraft.on.name=On
+controlmode.buildcraft.on.description=Turn on the machine
+controlmode.buildcraft.off.name=Off
+controlmode.buildcraft.off.description=Turn off the machine
+
+gui.energy=Energy
+gui.stored=Stored
+gui.assemblyRate=Assembly Rate
+gui.assemblyCurrentRequired=Required Energy
+
+gui.buildcraft.engine.energy=Energy
+gui.buildcraft.engine.current_output=Current output
+gui.buildcraft.engine.stored=Stored
+gui.buildcraft.engine.heat=Heat
+
+gui.buildcraft.engine_fuel.power_per_cycle=Power per cycle
+gui.buildcraft.engine_fuel.burn_time=Burn time
+gui.buildcraft.engine_coolant.degrees_cooled_per_mb=Degrees cooled per mB
+
+chat.engine.creative.mode=Switched to %d MJ/t limit
+chat.buildcraft.gate_copier.clear=Gate information cleared.
+chat.buildcraft.gate_copier.gate_copied=Copied gate information to copier.
+chat.buildcraft.gate_copier.gate_pasted=Pasted copied data to gate.
+chat.buildcraft.gate_copier.no_gate=No gate found on this side!
+chat.buildcraft.gate_copier.no_information=No gate information stored!
+chat.buildcraft.gate_copier.warning.action_parameters=§6Warning: Target has less action parameters!
+chat.buildcraft.gate_copier.warning.logic=§6Warning: Target has different logic type!
+chat.buildcraft.gate_copier.warning.load=§6Warning: Gate triggers/actions might be missing!
+chat.buildcraft.gate_copier.warning.slots=§6Warning: Target has less slots!
+chat.buildcraft.gate_copier.warning.trigger_parameters=§6Warning: Target has less trigger parameters!
+
+category.buildcraft.assembly_table=Assembly Table
+category.buildcraft.integration_table=Integration Table
+category.buildcraft.refinery=Refinery
+category.buildcraft.engine_fuel=Engine Fuel
+category.buildcraft.engine_coolant=Engine Coolant

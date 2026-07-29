@@ -1,0 +1,284 @@
+package malicedev.buildcraft.init;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.api.transport.gate.GateExpansions;
+import malicedev.buildcraft.block.entity.pipe.gate.GateLogic;
+import malicedev.buildcraft.block.entity.pipe.gate.GateMaterial;
+import malicedev.buildcraft.event.AssemblyTableRecipeRegisterEvent;
+import malicedev.buildcraft.event.IntegrationTableRecipeRegisterEvent;
+import malicedev.buildcraft.event.RefineryRecipeRegisterEvent;
+import malicedev.buildcraft.item.GateItem;
+import malicedev.buildcraft.recipe.integration.IntegrationTableRecipe;
+import malicedev.buildcraft.recipe.machine.AssemblyTableRecipe;
+import malicedev.buildcraft.recipe.machine.input.ItemRecipeInput;
+import malicedev.buildcraft.recipe.machine.input.TagRecipeInput;
+import malicedev.buildcraft.recipe.machine.output.RecipeOutput;
+import malicedev.buildcraft.recipe.refinery.RefineryRecipe;
+import malicedev.buildcraft.util.ColorUtil;
+import malicedev.nyalib.fluid.Fluid;
+import net.mine_diver.unsafeevents.listener.EventListener;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
+import net.modificationstation.stationapi.api.util.Namespace;
+
+public class RecipeListener {
+    @Entrypoint.Namespace
+    public static Namespace NAMESPACE;
+
+    @SuppressWarnings("DataFlowIssue")
+    @EventListener
+    public void registerAssemblyTableRecipes(AssemblyTableRecipeRegisterEvent event) {
+        event.register(
+                NAMESPACE.id("redstone_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(10000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("iron_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(20000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:ingots/iron"))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneIronChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("golden_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(40000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:ingots/gold"))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneGoldenChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("diamond_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(80000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:gems/diamond"))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneDiamondChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("pulsating_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(40000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new ItemRecipeInput(Item.DYE, 1, 5))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.pulsatingChipset, 2)))
+        );
+
+        event.register(
+                NAMESPACE.id("emerald_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(120000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:gems/diamond"))
+                        .addInput(new ItemRecipeInput(Item.DYE, 1, 10))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneEmeraldChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("glowstone_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(60000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:dusts/glowstone"))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneGlowstoneChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("comp_chipset"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(60000)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new ItemRecipeInput(Item.REPEATER))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redstoneCompChipset, 1)))
+        );
+
+        event.register(
+                NAMESPACE.id("red_pipe_wire"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(500)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:ingots/iron"))
+                        .addInput(new ItemRecipeInput(Item.DYE, 1, 1))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.redPipeWire, 8)))
+        );
+
+        event.register(
+                NAMESPACE.id("blue_pipe_wire"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(500)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:ingots/iron"))
+                        .addInput(new ItemRecipeInput(Item.DYE, 1, 4))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.bluePipeWire, 8)))
+        );
+
+        event.register(
+                NAMESPACE.id("green_pipe_wire"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(500)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:ingots/iron"))
+                        .addInput(new ItemRecipeInput(Item.DYE, 1, 2))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.greenPipeWire, 8)))
+        );
+
+        event.register(
+                NAMESPACE.id("yellow_pipe_wire"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(500)
+                        .addInput(new TagRecipeInput("c:dusts/redstone"))
+                        .addInput(new TagRecipeInput("c:ingots/iron"))
+                        .addInput(new ItemRecipeInput(Item.DYE, 1, 11))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.yellowPipeWire, 8)))
+        );
+
+        event.register(
+                NAMESPACE.id("pipe_plug"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(1000)
+                        .addInput(new ItemRecipeInput(Buildcraft.cobblestoneStructurePipe.asItem()))
+                        .addOutput(new RecipeOutput(new ItemStack(Buildcraft.plug, 8)))
+        );
+
+        for (int i = 0; i < 16; i++) {
+            event.register(
+                    NAMESPACE.id(ColorUtil.getName(i) + "_lens"),
+                    (AssemblyTableRecipe) new AssemblyTableRecipe(1000)
+                            .addInput(new TagRecipeInput("c:glass_blocks/colorless"))
+                            .addInput(new ItemRecipeInput(Item.DYE, 1, i))
+                            .addOutput(new RecipeOutput(new ItemStack(Buildcraft.lens[i], 2)))
+            );
+        }
+
+        for (int i = 0; i < 16; i++) {
+            event.register(
+                    NAMESPACE.id(ColorUtil.getName(i) + "_filter"),
+                    (AssemblyTableRecipe) new AssemblyTableRecipe(1000)
+                            .addInput(new TagRecipeInput("c:ingots/iron"))
+                            .addInput(new TagRecipeInput("c:glass_blocks/colorless"))
+                            .addInput(new ItemRecipeInput(Item.DYE, 1, i))
+                            .addOutput(new RecipeOutput(new ItemStack(Buildcraft.filter[i], 2)))
+            );
+        }
+
+        // gates
+        event.register(
+                NAMESPACE.id("basic_or_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(10000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.REDSTONE, GateLogic.OR))))
+        );
+        event.register(
+                NAMESPACE.id("basic_and_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(10000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.REDSTONE, GateLogic.AND))))
+        );
+
+        event.register(
+                NAMESPACE.id("iron_or_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(20000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneIronChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.IRON, GateLogic.OR))))
+        );
+        event.register(
+                NAMESPACE.id("iron_and_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(20000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneIronChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.IRON, GateLogic.AND))))
+        );
+
+        event.register(
+                NAMESPACE.id("gold_or_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(40000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneGoldenChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.GOLD, GateLogic.OR))))
+        );
+        event.register(
+                NAMESPACE.id("gold_and_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(40000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneGoldenChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.GOLD, GateLogic.AND))))
+        );
+
+        event.register(
+                NAMESPACE.id("glowstone_or_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(60000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneGlowstoneChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.GLOWSTONE, GateLogic.OR))))
+        );
+        event.register(
+                NAMESPACE.id("glowstone_and_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(60000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneGlowstoneChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.GLOWSTONE, GateLogic.AND))))
+        );
+
+        event.register(
+                NAMESPACE.id("diamond_or_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(80000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneDiamondChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.DIAMOND, GateLogic.OR))))
+        );
+        event.register(
+                NAMESPACE.id("diamond_and_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(80000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneDiamondChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.DIAMOND, GateLogic.AND))))
+        );
+
+        event.register(
+                NAMESPACE.id("emerald_or_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(120000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneEmeraldChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.EMERALD, GateLogic.OR))))
+        );
+        event.register(
+                NAMESPACE.id("emerald_and_gate"),
+                (AssemblyTableRecipe) new AssemblyTableRecipe(120000)
+                        .addInput(new ItemRecipeInput(Buildcraft.redstoneEmeraldChipset))
+                        .addOutput(new RecipeOutput(new ItemStack(GateItem.getGateItem(GateMaterial.EMERALD, GateLogic.AND))))
+        );
+    }
+
+    @EventListener
+    public void registerIntegrationTableRecipes(IntegrationTableRecipeRegisterEvent event) {
+        event.register(
+                NAMESPACE.id("autarchic_pulsar"),
+                new IntegrationTableRecipe(
+                        new ItemRecipeInput(Buildcraft.pulsatingChipset),
+                        GateExpansions.getExpansion(Buildcraft.NAMESPACE.id("pulsar")),
+                        2000
+                )
+        );
+        event.register(
+                NAMESPACE.id("redstone_fader"),
+                new IntegrationTableRecipe(
+                        new ItemRecipeInput(Buildcraft.redstoneCompChipset),
+                        GateExpansions.getExpansion(Buildcraft.NAMESPACE.id("fader")),
+                        2000
+                )
+        );
+        event.register(
+                NAMESPACE.id("timer"),
+                new IntegrationTableRecipe(
+                        new ItemRecipeInput(Buildcraft.redstoneGlowstoneChipset),
+                        GateExpansions.getExpansion(Buildcraft.NAMESPACE.id("timer")),
+                        2000
+                )
+        );
+        event.register(
+                NAMESPACE.id("light_sensor"),
+                new IntegrationTableRecipe(
+                        new ItemRecipeInput(Block.TORCH.asItem()),
+                        GateExpansions.getExpansion(Buildcraft.NAMESPACE.id("light_sensor")),
+                        2000
+                )
+        );
+    }
+
+    @EventListener
+    public void registerRefineryRecipes(RefineryRecipeRegisterEvent event) {
+        event.register(
+                NAMESPACE.id("oil_to_fuel"),
+                new RefineryRecipe(new Fluid[]{FluidListener.oil, null}, new int[]{1, 0}, FluidListener.fuel, 1, 10, 1)
+        );
+    }
+}

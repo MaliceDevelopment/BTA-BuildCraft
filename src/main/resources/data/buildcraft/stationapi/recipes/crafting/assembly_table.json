@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "oro",
+    "odo",
+    "ogo"
+  ],
+  "key": {
+    "o": {
+      "tag": "c:obsidians/normal"
+    },
+    "r": {
+      "tag": "c:dusts/redstone"
+    },
+    "d": {
+      "tag": "c:gems/diamond"
+    },
+    "g": {
+      "tag": "c:gears/diamond"
+    }
+  },
+  "result": {
+    "item": "buildcraft:assembly_table"
+  }
+}

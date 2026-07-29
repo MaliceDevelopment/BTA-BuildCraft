@@ -1,0 +1,33 @@
+package malicedev.buildcraft.client.render.item;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.util.Constants;
+import malicedev.buildcraft.util.RenderHelper;
+import net.minecraft.block.Block;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.block.BlockRenderManager;
+import org.lwjgl.opengl.GL11;
+
+public class PipeItemRenderer {
+    public void renderPipeItem(BlockRenderManager blockRenderManager, Block block, int meta, float translateX, float translateY, float translateZ){
+        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT); // Not used, unless we implement stained glass
+        GL11.glPushMatrix();
+
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glEnable(GL11.GL_BLEND);
+
+        Tessellator tessellator = Tessellator.INSTANCE;
+
+        Block renderBlock = Buildcraft.renderBlock;
+        renderBlock.setBoundingBox(Constants.PIPE_MIN_POS, 0.0F, Constants.PIPE_MIN_POS, Constants.PIPE_MAX_POS, 1.0F, Constants.PIPE_MAX_POS);
+
+        GL11.glTranslatef(translateX, translateY, translateZ);
+
+        RenderHelper.drawBlockItem(blockRenderManager, tessellator, renderBlock, block.getTexture(0));
+
+        renderBlock.setBoundingBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+
+        GL11.glPopAttrib();
+        GL11.glPopMatrix();
+    }
+}

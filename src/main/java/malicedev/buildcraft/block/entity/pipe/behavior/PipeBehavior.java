@@ -1,0 +1,201 @@
+package malicedev.buildcraft.block.entity.pipe.behavior;
+
+import com.google.common.collect.Multiset;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import malicedev.buildcraft.api.energy.IPowerEmitter;
+import malicedev.buildcraft.api.energy.IPowerReceptor;
+import malicedev.buildcraft.api.energy.PowerHandler;
+import malicedev.buildcraft.api.transport.statement.ActionInternal;
+import malicedev.buildcraft.api.transport.statement.StatementSlot;
+import malicedev.buildcraft.block.entity.pipe.*;
+import malicedev.buildcraft.block.entity.pipe.event.ItemPipeEvent;
+import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter;
+import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter.FailedPathingResult;
+import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter.HandOffResult;
+import malicedev.buildcraft.config.Config;
+import malicedev.buildcraft.entity.TravellingItemEntity;
+import malicedev.nyalib.capability.CapabilityHelper;
+import malicedev.nyalib.capability.block.fluidhandler.FluidHandlerBlockCapability;
+import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
+import malicedev.nyalib.fluid.FluidStack;
+import malicedev.uniwrench.api.WrenchMode;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.util.math.Direction;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+
+/**
+ * This class governs the behavior of a pipe
+ */
+public class PipeBehavior {
+    public PipeBehavior() {
+    }
+
+    /**
+     * @param blockEntity       The block entity of the pipe this is called on
+     * @param otherBlockEntity  The block entity of the pipe we want to connect to
+     * @param otherPipeBehavior The behavior of the pipe we want to connect to
+     * @param side              The side on which the other pipe is
+     * @return If we can connect to the other pipe
+     */
+    public PipeConnectionType canConnectToPipe(PipeBlockEntity blockEntity, PipeBlockEntity otherBlockEntity, PipeBehavior otherPipeBehavior, Direction side) {
+        if (otherBlockEntity.getPipeColor() >= 0 && blockEntity.getPipeColor() >= 0) {
+            if (otherBlockEntity.getPipeColor() != blockEntity.getPipeColor()) {
+                return PipeConnectionType.NONE;
+            }
+        }
+
+        if (otherBlockEntity.transporter.getType() == blockEntity.transporter.getType()) {
+            return PipeConnectionType.NORMAL;
+        }
+
+        return PipeConnectionType.NONE;
+    }
+
+    /**
+     * Get the connection type for a side/block
+     *
+     * @param type        The type of this pipe
+     * @param blockEntity The block entity of this pipe
+     * @param world       The world the pipe is in
+     * @param x           The x position of the pipe
+     * @param y           The y position of the pipe
+     * @param z           The z position of the pipe
+     * @param side        The side where the target block is located
+     * @return The connection type to the target block
+     */
+    public PipeConnectionType getConnectionType(PipeType type, PipeBlockEntity blockEntity, World world, int x, int y, int z, Direction side) {
+        switch (type) {
+            case ITEM -> {
+                ItemHandlerBlockCapability cap = CapabilityHelper.getCapability(world, x + side.getOffsetX(), y + side.getOffsetY(), z + side.getOffsetZ(), ItemHandlerBlockCapability.class);
+
+                if (cap != null) {
+                    return cap.canConnectItem(side.getOpposite()) ? PipeConnectionType.NORMAL : PipeConnectionType.NONE;
+                }
+            }
+
+            case FLUID -> {
+                FluidHandlerBlockCapability cap = CapabilityHelper.getCapability(world, x + side.getOffsetX(), y + side.getOffsetY(), z + side.getOffsetZ(), FluidHandlerBlockCapability.class);
+
+                if (cap != null) {
+                    return cap.canConnectFluid(side.getOpposite()) ? PipeConnectionType.NORMAL : PipeConnectionType.NONE;
+                }
+            }
+
+            case ENERGY -> {
+                BlockEntity other = world.getBlockEntity(x + side.getOffsetX(), y + side.getOffsetY(), z + side.getOffsetZ());
+                if (other instanceof IPowerEmitter powerEmitter) {
+                    return powerEmitter.canEmitPowerFrom(side.getOpposite()) ? PipeConnectionType.NORMAL : PipeConnectionType.NONE;
+                }
+
+                if (other instanceof IPowerReceptor powerReceptor) {
+                    return powerReceptor.getPowerReceiver(side.getOpposite()) != null ? PipeConnectionType.NORMAL : PipeConnectionType.NONE;
+                }
+            }
+        }
+
+        return PipeConnectionType.NONE;
+    }
+
+    /**
+     * Fires at the end of the transporter tick method
+     *
+     * @param blockEntity The block entity of the pipe
+     * @param transporter The transporter of the pipe
+     */
+    public void transporterTick(PipeBlockEntity blockEntity, PipeTransporter transporter) {
+
+    }
+
+    /**
+     * Fires at the end of the block entity tick method
+     *
+     * @param blockEntity The block entity of the pipe
+     * @param transporter The transporter of the pipe
+     */
+    public void blockEntityTick(PipeBlockEntity blockEntity, PipeTransporter transporter) {
+
+    }
+
+    /**
+     * Pick a direction in which the item will continue travelling
+     *
+     * @param blockEntity           The block entity of the blockEntity this is called on
+     * @param validOutputDirections The directions in which the item can travel
+     * @param item                  The item that we are picking a direction for
+     * @return The direction in which the item will travel, or null if there is no valid direction
+     */
+    public Direction routeItem(PipeBlockEntity blockEntity, ObjectArrayList<Direction> validOutputDirections, TravellingItemEntity item) {
+        ObjectArrayList<Direction> directions = new ObjectArrayList<>(validOutputDirections);
+        directions.remove(item.input);
+
+        ItemPipeEvent.FindDest event = new ItemPipeEvent.FindDest(blockEntity, item, directions);
+        blockEntity.eventBus.handleEvent(ItemPipeEvent.FindDest.class, event);
+
+        if (event.shuffle) {
+            Collections.shuffle(directions);
+        }
+
+        if (directions.isEmpty()) {
+            return null;
+        }
+
+        return directions.get(blockEntity.random.nextInt(directions.size()));
+    }
+
+    public boolean isValidOutputDirection(PipeBlockEntity blockEntity, Direction side, PipeConnectionType connectionType) {
+        return connectionType != PipeConnectionType.NONE;
+    }
+
+    public HandOffResult getFailedInsertResult(PipeBlockEntity blockEntity, ItemPipeTransporter transporter, TravellingItemEntity item) {
+        return Config.PIPE_CONFIG.failedInsertResult;
+    }
+
+    public FailedPathingResult getFailedPathingResult(PipeBlockEntity blockEntity, ItemPipeTransporter transporter, TravellingItemEntity item) {
+        return FailedPathingResult.DROP;
+    }
+
+    public double modifyItemSpeed(TravellingItemEntity item) {
+        return TravellingItemEntity.DEFAULT_SPEED;
+    }
+
+    public Multiset<ForgeDirection> routeFluid(PipeBlockEntity blockEntity, Multiset<ForgeDirection> directions, FluidStack fluidStack) {
+        return directions;
+    }
+
+    public boolean isFluidInputOpen(PipeBlockEntity blockEntity, Direction side, PipeConnectionType connectionType) {
+        return true;
+    }
+
+    public boolean isFluidOutputOpen(PipeBlockEntity blockEntity, Direction side, PipeConnectionType connectionType) {
+        return true;
+    }
+
+    /**
+     * <p> **NOTE: This is only called on pipes which use the {@link PoweredPipeBlockEntity}**
+     * <p> This is called when the pipes energy exceeds the activation energy threshold
+     *
+     * @param blockEntity  The block entity of the pipe this is called on
+     * @param powerHandler The power handler of the pipe
+     */
+    public void doWork(PoweredPipeBlockEntity blockEntity, PowerHandler powerHandler) {
+
+    }
+
+    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+        return false;
+    }
+
+    public void actionsActivated(PipeBlockEntity blockEntity, Collection<StatementSlot> actions) {
+
+    }
+
+    public LinkedList<ActionInternal> getActions(PipeBlockEntity blockEntity) {
+        return new LinkedList<>();
+    }
+}

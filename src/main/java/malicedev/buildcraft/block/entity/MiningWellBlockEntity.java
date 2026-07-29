@@ -1,0 +1,313 @@
+package malicedev.buildcraft.block.entity;
+
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.api.energy.IPowerReceptor;
+import malicedev.buildcraft.api.energy.PowerHandler;
+import malicedev.buildcraft.block.MiningWellBlock;
+import malicedev.buildcraft.config.Config;
+import malicedev.buildcraft.util.BlockUtil;
+import malicedev.buildcraft.util.ItemUtil;
+import malicedev.nyalib.item.block.ManagedItemHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.LiquidBlock;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.block.States;
+import net.modificationstation.stationapi.api.registry.BlockRegistry;
+import net.modificationstation.stationapi.api.tag.TagKey;
+import net.modificationstation.stationapi.api.util.math.Direction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class MiningWellBlockEntity extends BlockEntity implements IPowerReceptor, ManagedItemHandler {
+    private static final Random RANDOM = new Random();
+    private static final ObjectArrayList<Vec3i> SEARCH_OFFSETS = new ObjectArrayList<>();
+
+    private final PickaxeItem pickaxe = (PickaxeItem) Item.IRON_PICKAXE;
+    private final TagKey<Block> target = TagKey.of(BlockRegistry.INSTANCE.getKey(), Buildcraft.NAMESPACE.id("mining_well_target"));
+    public PowerHandler powerHandler;
+    private final ObjectArrayList<Vec3i> queue = new ObjectArrayList<>();
+
+    static {
+        // Top and Bottom
+        SEARCH_OFFSETS.add(new Vec3i(0, 1, 0));
+        SEARCH_OFFSETS.add(new Vec3i(0, -1, 0));
+
+        // Sides
+        SEARCH_OFFSETS.add(new Vec3i(1, 0, 0));
+        SEARCH_OFFSETS.add(new Vec3i(-1, 0, 0));
+        SEARCH_OFFSETS.add(new Vec3i(0, 0, 1));
+        SEARCH_OFFSETS.add(new Vec3i(0, 0, -1));
+
+        // Diagonals
+        SEARCH_OFFSETS.add(new Vec3i(1, 0, 1));
+        SEARCH_OFFSETS.add(new Vec3i(1, 0, -1));
+        SEARCH_OFFSETS.add(new Vec3i(-1, 0, 1));
+        SEARCH_OFFSETS.add(new Vec3i(-1, 0, -1));
+    }
+
+    public MiningWellBlockEntity() {
+        powerHandler = new PowerHandler(this, PowerHandler.Type.MACHINE);
+
+        powerHandler.configure(Config.MACHINE_CONFIG.miningWell.mjPerBlock, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 2, Config.MACHINE_CONFIG.miningWell.mjPerBlock, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 10);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (isActive()) {
+            powerHandler.update();
+        } else {
+            if (world.getTime() % 4 == 0) {
+                retract();
+            }
+        }
+
+        if (world.getTime() % 20 == 0) {
+            reconfigurePowerHandler();
+        }
+    }
+
+    public boolean isActive() {
+        BlockState state = world.getBlockState(x, y, z);
+
+        if (state.isOf(Buildcraft.miningWell)) {
+            return state.get(MiningWellBlock.ACTIVE);
+        }
+
+        return false;
+    }
+
+    public void setActive(boolean active) {
+        BlockState state = world.getBlockState(x, y, z);
+
+        if (state.isOf(Buildcraft.miningWell)) {
+            world.setBlockState(x, y, z, state.with(MiningWellBlock.ACTIVE, active));
+            reconfigurePowerHandler();
+        }
+    }
+
+    public void reconfigurePowerHandler() {
+        if (isActive()) {
+            powerHandler.configure(Config.MACHINE_CONFIG.miningWell.mjPerBlock, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 2, Config.MACHINE_CONFIG.miningWell.mjPerBlock, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 10);
+        } else {
+            powerHandler.configure(0, 0, Integer.MAX_VALUE, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 10);
+        }
+    }
+
+    @Override
+    public PowerHandler.PowerReceiver getPowerReceiver(Direction side) {
+        return powerHandler.getPowerReceiver();
+    }
+
+    @Override
+    public void doWork(PowerHandler workProvider) {
+        if (!isActive()) {
+            return;
+        }
+
+        float mj = Config.MACHINE_CONFIG.miningWell.mjPerBlock;
+
+        // Check if enough energy is avalible
+        if (powerHandler.useEnergy(mj, mj, false) < mj) {
+            return;
+        }
+
+        // Mine the next block
+        if (mine()) {
+            powerHandler.useEnergy(mj, mj, true);
+        }
+    }
+
+    public boolean mine() {
+        if (queue.isEmpty()) {
+            return advance();
+        }
+
+        Vec3i pos = queue.remove(0);
+        return mineBlock(pos.x, pos.y, pos.z);
+    }
+
+    public boolean advance() {
+        int currentY = y - 1;
+
+        // Loop down the pipes until we get to the bottom of them
+        while (world.getBlockState(x, currentY, z).isOf(Buildcraft.miningPipe)) {
+            currentY--;
+        }
+
+        if (currentY == world.getBottomY() || world.getBlockState(x, currentY, z).isOf(Block.BEDROCK)) {
+            finish();
+            return true;
+        }
+
+        // Try to mine the next block
+        if (mineBlock(x, currentY, z)) {
+            world.setBlockState(x, currentY, z, Buildcraft.miningPipe.getDefaultState());
+            findBlocks(x, currentY, z);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean mineBlock(int x, int y, int z) {
+        BlockState state = world.getBlockState(x, y, z);
+
+        if (state.isAir()) {
+            return true;
+        }
+
+        if (state.isOf(Buildcraft.miningPipe)) {
+            return false;
+        }
+
+        if (state.getBlock() instanceof LiquidBlock) {
+            return true;
+        }
+
+        if (canHarvest(state.getBlock())) {
+            List<ItemStack> drops = BlockUtil.getStacksFromBlock(world, x, y, z);
+
+            if (drops != null) {
+                for (ItemStack s : drops) {
+                    if (s != null) {
+                        mineStack(s);
+                    }
+                }
+            }
+
+            int blockId = world.getBlockId(x, y, z);
+            world.worldEvent(null, 2001, x, y, z, blockId + (world.getBlockMeta(x, y, z) << 28));
+            world.setBlockState(x, y, z, States.AIR.get());
+            return true;
+        }
+
+        return false;
+    }
+
+    private void mineStack(ItemStack stack) {
+        // First, try to add to a nearby chest
+        stack = ItemUtil.addToRandomInventory(stack, world, x, y, z);
+        if (stack == null) {
+            return;
+        }
+
+        // Second, try to add to adjacent pipes
+        stack = ItemUtil.addToRandomPipeEntry(this, stack);
+        if (stack == null) {
+            return;
+        }
+
+        // Lastly, throw the object away
+        if (stack.count > 0) {
+            float xOffset = world.random.nextFloat() * 0.8F + 0.1F;
+            float yOffset = world.random.nextFloat() * 0.8F + 0.1F;
+            float zOffset = world.random.nextFloat() * 0.8F + 0.1F;
+
+            ItemEntity itemEntity = new ItemEntity(world, x + xOffset, y + yOffset + 0.5F, z + zOffset, stack);
+
+            itemEntity.pickupDelay = 10;
+
+            float baseVelocity = 0.05F;
+            itemEntity.velocityX = (float) world.random.nextGaussian() * baseVelocity;
+            itemEntity.velocityY = (float) world.random.nextGaussian() * baseVelocity + 1.0F;
+            itemEntity.velocityZ = (float) world.random.nextGaussian() * baseVelocity;
+            world.spawnEntity(itemEntity);
+        }
+    }
+
+    public boolean canHarvest(Block block) {
+        if (block.material.isHandHarvestable()) {
+            return true;
+        } else {
+            return pickaxe.isSuitableFor(block);
+        }
+    }
+
+    public void findBlocks(int x, int y, int z) {
+        for (Vec3i side : SEARCH_OFFSETS) {
+            Vec3i pos = new Vec3i(x + side.x, y + side.y, z + side.z);
+            if (world.getBlockState(pos.x, pos.y, pos.z).isIn(target) && !queue.contains(pos)) {
+                queue.addAll(walk(pos));
+            }
+        }
+    }
+
+    public ArrayList<Vec3i> walk(Vec3i start) {
+        // ArrayList for list of blocks yet to explore
+        ArrayList<Vec3i> open = new ArrayList<>();
+        // ArrayList for list of blocks that have been found
+        ArrayList<Vec3i> closed = new ArrayList<>();
+
+        // Add the starting position to explore
+        open.add(start);
+
+        // Go until open isnt empty
+        while (!open.isEmpty()) {
+            // Get the position to explore
+            Vec3i pos = open.get(0);
+            // Look at all of its sides
+            for (Vec3i dir : SEARCH_OFFSETS) {
+                // Get the side and see if there is a block on it. Then check if it doesnt already exist
+                Vec3i side = new Vec3i(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
+                if (!closed.contains(side)) {
+                    if (world.getBlockState(side.x, side.y, side.z).isIn(target)) {
+                        open.add(side);
+                    }
+                }
+            }
+
+            // Add the position to closed and remove it from open
+            closed.add(pos);
+            open.remove(pos);
+        }
+
+        return closed;
+    }
+
+    public void finish() {
+        setActive(false);
+        retract();
+    }
+
+    public void retract() {
+        int currentY = y - 1;
+
+        // Loop down the pipes until we get to the bottom of them
+        while (world.getBlockState(x, currentY, z).isOf(Buildcraft.miningPipe)) {
+            if (!world.getBlockState(x, currentY - 1, z).isOf(Buildcraft.miningPipe)) {
+                world.setBlockState(x, currentY, z, States.AIR.get());
+                return;
+            }
+            currentY--;
+        }
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
+    }
+
+    // NBT
+    @Override
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+    }
+}

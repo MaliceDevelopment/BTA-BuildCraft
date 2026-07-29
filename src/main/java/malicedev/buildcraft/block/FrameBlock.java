@@ -1,0 +1,251 @@
+package malicedev.buildcraft.block;
+
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.client.render.block.FrameWorldRenderer;
+import malicedev.buildcraft.init.TextureListener;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.EnvironmentInterface;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.block.States;
+import net.modificationstation.stationapi.api.client.model.block.BlockWithWorldRenderer;
+import net.modificationstation.stationapi.api.item.ItemPlacementContext;
+import net.modificationstation.stationapi.api.state.StateManager;
+import net.modificationstation.stationapi.api.state.property.BooleanProperty;
+import net.modificationstation.stationapi.api.state.property.Properties;
+import net.modificationstation.stationapi.api.template.block.TemplateBlock;
+import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.api.util.math.Direction;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
+@SuppressWarnings("deprecation")
+@EnvironmentInterface(value = EnvType.CLIENT, itf = BlockWithWorldRenderer.class)
+public class FrameBlock extends TemplateBlock implements BlockWithWorldRenderer {
+    public static final HashMap<Direction, BooleanProperty> PROPERTY_LOOKUP = new HashMap<>();
+    private final Random random = new Random();
+
+    private final FrameWorldRenderer worldRenderer = new FrameWorldRenderer();
+
+    static {
+        PROPERTY_LOOKUP.put(Direction.UP, Properties.UP);
+        PROPERTY_LOOKUP.put(Direction.DOWN, Properties.DOWN);
+        PROPERTY_LOOKUP.put(Direction.NORTH, Properties.NORTH);
+        PROPERTY_LOOKUP.put(Direction.SOUTH, Properties.SOUTH);
+        PROPERTY_LOOKUP.put(Direction.EAST, Properties.EAST);
+        PROPERTY_LOOKUP.put(Direction.WEST, Properties.WEST);
+    }
+
+    public FrameBlock(Identifier identifier, Material material) {
+        super(identifier, material);
+        this.setTickRandomly(true);
+    }
+
+    // Properties
+    @Override
+    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(Properties.UP, Properties.DOWN, Properties.NORTH, Properties.SOUTH, Properties.EAST, Properties.WEST);
+    }
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext context) {
+        return getDefaultState()
+                .with(Properties.UP, false)
+                .with(Properties.DOWN, false)
+                .with(Properties.NORTH, false)
+                .with(Properties.SOUTH, false)
+                .with(Properties.EAST, false)
+                .with(Properties.WEST, false);
+    }
+
+    // Dropped Item
+    @Override
+    public int getDroppedItemId(int blockMeta, Random random) {
+        return 0;
+    }
+
+    @Override
+    public int getDroppedItemMeta(int blockMeta) {
+        return 0;
+    }
+
+    @Override
+    public void onTick(World world, int x, int y, int z, Random random) {
+        super.onTick(world, x, y, z, random);
+
+        // Check for decay
+        if (world.getBlockMeta(x, y, z) == 1 && random.nextInt(2) == 0) {
+            world.setBlockState(x, y, z, States.AIR.get());
+        }
+    }
+
+    // Connecting Logic
+    @Override
+    public void neighborUpdate(World world, int x, int y, int z, int id) {
+        super.neighborUpdate(world, x, y, z, id);
+        updateConnections(world, x, y, z);
+    }
+
+    @Override
+    public void onPlaced(World world, int x, int y, int z) {
+        super.onPlaced(world, x, y, z);
+        updateConnections(world, x, y, z);
+    }
+
+    public void updateConnections(World world, int x, int y, int z) {
+        BlockState state = world.getBlockState(x, y, z);
+
+        for (Direction side : Direction.values()) {
+            state = state.with(PROPERTY_LOOKUP.get(side), this.canConnectTo(world, x + side.getOffsetX(), y + side.getOffsetY(), z + side.getOffsetZ()));
+        }
+
+        world.setBlockState(x, y, z, state, world.getBlockMeta(x, y, z));
+    }
+
+    public boolean canConnectTo(World world, int x, int y, int z) {
+        return world.getBlockState(x, y, z).isOf(Buildcraft.frame);
+    }
+
+    // Bounding Box
+    private final float minOffset = 0.25F;
+    private final float maxOffset = 0.75F;
+
+    @Override
+    public Box getBoundingBox(World world, int x, int y, int z) {
+        BlockState state = world.getBlockState(x, y, z);
+
+        float minX = minOffset;
+        float minY = minOffset;
+        float minZ = minOffset;
+
+        float maxX = maxOffset;
+        float maxY = maxOffset;
+        float maxZ = maxOffset;
+
+        if (state.get(Properties.UP)) {
+            maxY = 1.0F;
+        }
+
+        if (state.get(Properties.DOWN)) {
+            minY = 0.0F;
+        }
+
+        if (state.get(Properties.SOUTH)) {
+            maxZ = 1.0F;
+        }
+
+        if (state.get(Properties.NORTH)) {
+            minZ = 0.0F;
+        }
+
+        if (state.get(Properties.WEST)) {
+            minX = 0.0F;
+        }
+
+        if (state.get(Properties.EAST)) {
+            maxX = 1.0F;
+        }
+
+        return Box.createCached(x + minX, y + minY, z + minZ, x + maxX, y + maxY, z + maxZ);
+    }
+
+    @Override
+    public void addIntersectingBoundingBox(World world, int x, int y, int z, Box box, ArrayList boxes) {
+        BlockState state = world.getBlockState(x, y, z);
+
+        this.setBoundingBox(minOffset, minOffset, minOffset, maxOffset, maxOffset, maxOffset);
+        super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+
+        if (state.get(Properties.UP)) {
+            this.setBoundingBox(minOffset, minOffset, minOffset, maxOffset, 1.0F, maxOffset);
+            super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+        }
+
+        if (state.get(Properties.DOWN)) {
+            this.setBoundingBox(minOffset, 0.0F, minOffset, maxOffset, maxOffset, maxOffset);
+            super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+        }
+
+        if (state.get(Properties.SOUTH)) {
+            this.setBoundingBox(minOffset, minOffset, minOffset, maxOffset, maxOffset, 1.0F);
+            super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+        }
+
+        if (state.get(Properties.NORTH)) {
+            this.setBoundingBox(minOffset, minOffset, 0.0F, maxOffset, maxOffset, maxOffset);
+            super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+        }
+
+        if (state.get(Properties.EAST)) {
+            this.setBoundingBox(minOffset, minOffset, minOffset, 1.0F, maxOffset, maxOffset);
+            super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+        }
+
+        if (state.get(Properties.WEST)) {
+            this.setBoundingBox(0.0F, minOffset, minOffset, maxOffset, maxOffset, maxOffset);
+            super.addIntersectingBoundingBox(world, x, y, z, box, boxes);
+        }
+
+        this.setBoundingBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    @Override
+    public HitResult raycast(World world, int x, int y, int z, Vec3d startPos, Vec3d endPos) {
+        ArrayList<Box> boxes = new ArrayList<>();
+
+        addIntersectingBoundingBox(world, x, y, z, Box.create(0f, 0f, 0f, 1f, 1f,1f).offset(x, y, z), boxes);
+
+        HitResult closest = null;
+        for (Box box : boxes) {
+            HitResult mop = box.raycast(startPos, endPos);
+            if (mop != null) {
+                if (closest != null && mop.pos.distanceTo(startPos) < closest.pos.distanceTo(startPos)) {
+                    closest = mop;
+                } else {
+                    closest = mop;
+                }
+            }
+        }
+        if (closest != null) {
+            closest.blockX = x;
+            closest.blockY = y;
+            closest.blockZ = z;
+        }
+        return closest;
+    }
+
+    // Rendering
+    @Override
+    public boolean isFullCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaque() {
+        return false;
+    }
+
+    @Override
+    public int getTexture(int side) {
+        if(TextureListener.frameSprite == null){
+            return 0;
+        }
+        return TextureListener.frameSprite.index;
+    }
+
+    @Override
+    public boolean renderWorld(BlockRenderManager tileRenderer, BlockView tileView, int x, int y, int z) {
+        worldRenderer.renderFrame(tileRenderer, tileView, x, y, z, this.id, TextureListener.frame);
+        return true;
+    }
+}

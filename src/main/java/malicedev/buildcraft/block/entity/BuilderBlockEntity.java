@@ -1,0 +1,521 @@
+package malicedev.buildcraft.block.entity;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import malicedev.buildcraft.Buildcraft;
+import malicedev.buildcraft.api.blockentity.HasWork;
+import malicedev.buildcraft.api.energy.IPowerReceptor;
+import malicedev.buildcraft.api.energy.PowerHandler;
+import malicedev.buildcraft.block.BuilderBlock;
+import malicedev.buildcraft.config.Config;
+import malicedev.buildcraft.inventory.SimpleInventory;
+import malicedev.buildcraft.item.BlueprintData;
+import malicedev.buildcraft.item.BlueprintData.BlueprintEntry;
+import malicedev.buildcraft.item.BlueprintPersistentState;
+import malicedev.buildcraft.item.BuilderBlueprintItem;
+import malicedev.buildcraft.item.BuilderTemplateItem;
+import malicedev.nyalib.particle.ParticleHelper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.LeavesBlockItem;
+import net.minecraft.item.SecondaryBlockItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.registry.BlockRegistry;
+import net.modificationstation.stationapi.api.state.property.Properties;
+import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.api.util.math.Direction;
+
+public class BuilderBlockEntity extends AreaWorkerBlockEntity implements Inventory, IPowerReceptor, HasWork {
+    public SimpleInventory inventory = new SimpleInventory(28, "Builder", this::markDirty);
+    public BlueprintData blueprint = null;
+
+    public PowerHandler powerHandler;
+
+    // Status
+    public ObjectArrayList<BlueprintEntry> remainingEntries = new ObjectArrayList<>();
+    public Int2ObjectOpenHashMap<NeededBlockEntry> neededBlockEntries = new Int2ObjectOpenHashMap<>();
+    public BuilderState state = BuilderState.IDLE;
+    public int cooldown = 0;
+    public int remainingBlocks = 0;
+
+    // Settings
+    public boolean rotationEnabled = false;
+    public boolean clearAreaBeforeBuild = false;
+    public boolean pauseOnMissingBlock = true;
+    public boolean pauseOnBlockedBlock = true;
+
+    public BuilderBlockEntity() {
+        powerHandler = new PowerHandler(this, PowerHandler.Type.MACHINE);
+
+        powerHandler.configure(Config.MACHINE_CONFIG.miningWell.mjPerBlock, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 2, Config.MACHINE_CONFIG.miningWell.mjPerBlock, Config.MACHINE_CONFIG.miningWell.mjPerBlock * 10);
+    }
+
+    public void stopConstruction() {
+        state = BuilderState.STOPPED;
+        destroyWorkingArea();
+        blueprint = null;
+        remainingEntries.clear();
+        neededBlockEntries.clear();
+    }
+
+    public void startConstruction() {
+        if (state == BuilderState.READY) {
+            state = BuilderState.BUILDING;
+        }
+    }
+
+    public void pauseConstruction() {
+        if (state == BuilderState.BUILDING) {
+            state = BuilderState.READY;
+        }
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (!Config.MACHINE_CONFIG.builder.enabled) {
+            return;
+        }
+
+        if (world.isRemote) {
+            return;
+        }
+
+        if(state == BuilderState.BUILDING){
+            if(robot == null){
+                createRobot();
+            }
+        } else {
+            if(robot != null){
+                destroyRobot();
+            }
+        }
+
+        remainingBlocks = remainingEntries.size();
+        powerHandler.update();
+
+        if (hasBlueprint()) {
+            if (state == BuilderState.STOPPED) {
+                return;
+            }
+
+            if (blueprint == null) {
+                blueprint = BlueprintPersistentState.get(world, inventory.getStack(0).getDamage()).data;
+                remainingEntries.addAll(blueprint.entries);
+                calculateNeededBlocks();
+            }
+
+            if (workingArea == null) {
+                Direction blueprintFacing = blueprint.facing;
+                Direction builderFacing = null;
+
+                BlockState builderState = world.getBlockState(x,y,z);
+                if (builderState.getBlock() instanceof BuilderBlock block) {
+                    builderFacing = builderState.get(Properties.HORIZONTAL_FACING);
+                }
+
+                if (builderFacing == null) {
+                    return;
+                }
+
+                int minX = x;
+                int minY = y;
+                int minZ = z;
+                int maxX = x;
+                int maxY = y + (blueprint.sizeY - 1);
+                int maxZ = z;
+
+                if (rotationEnabled) {
+                    return; // NYI
+                } else {
+                    switch (builderFacing.getOpposite()) {
+                        case NORTH -> {
+                            minX = x;
+                            minZ = z - blueprint.sizeZ;
+                            maxX = x + (blueprint.sizeX - 1);
+                            maxZ = z - 1;
+                        }
+
+                        case SOUTH -> {
+                            minX = x - (blueprint.sizeX - 1);
+                            minZ = z + 1;
+                            maxX = x;
+                            maxZ = z + blueprint.sizeZ;
+                        }
+
+                        case WEST -> {
+                            minX = x - blueprint.sizeX;
+                            minZ = z - (blueprint.sizeZ - 1);
+                            maxX = x - 1;
+                            maxZ = z;
+                        }
+
+                        case EAST -> {
+                            minX = x + 1;
+                            minZ = z;
+                            maxX = x + blueprint.sizeX;
+                            maxZ = z + (blueprint.sizeZ - 1);
+                        }
+                    }
+                }
+
+                constructWorkingArea(minX, minY, minZ, maxX, maxY, maxZ);
+            }
+
+            if (state == BuilderState.IDLE && blueprint != null && workingArea != null) {
+                state = BuilderState.READY;
+                return;
+            }
+
+            if (Config.MACHINE_CONFIG.builder.mjPerBlock <= 0) {
+                tickConstruction();
+            }
+
+            cooldown--;
+        } else {
+            stopConstruction();
+            state = BuilderState.IDLE;
+        }
+    }
+
+    @Override
+    public void doWork(PowerHandler workProvider) {
+        if (!Config.MACHINE_CONFIG.builder.enabled) {
+            return;
+        }
+
+        int mjPerBlock = Config.MACHINE_CONFIG.builder.mjPerBlock;
+        if (mjPerBlock <= 0) {
+            return;
+        }
+
+        if (world.isRemote) {
+            return;
+        }
+
+        if (state != BuilderState.BUILDING) {
+            return;
+        }
+
+        if (powerHandler.getEnergyStored() >= mjPerBlock) {
+            if (tickConstruction()) {
+                if (powerHandler.useEnergy(mjPerBlock, mjPerBlock, true) < mjPerBlock) {
+                    Buildcraft.LOGGER.warn("The energy was there 2 lines ago, but it's not now ._.");
+                }
+            }
+        }
+    }
+
+    public boolean tickConstruction() {
+        if (state != BuilderState.BUILDING) {
+            return false;
+        }
+
+        if (blueprint == null || workingArea == null) {
+            return false;
+        }
+
+        if (remainingEntries.isEmpty()) {
+            state = BuilderState.STOPPED;
+            destroyWorkingArea();
+            return true;
+        }
+
+        BlueprintEntry nextBlock = remainingEntries.get(0);
+
+        setRobotTarget(workingArea.minX + nextBlock.x, workingArea.minY + nextBlock.y, workingArea.minZ + nextBlock.z);
+
+        if (cooldown <= 0) {
+            PlaceResult result = placeEntry(remainingEntries.get(0));
+            boolean requiresEnergy = Config.MACHINE_CONFIG.builder.mjPerBlock > 0;
+
+            switch (result) {
+                case SUCCESS -> {
+                    remainingEntries.remove(0);
+                    cooldown = requiresEnergy ? 1 : 5;
+                    return true;
+                }
+                case ERROR -> {
+                    remainingEntries.remove(0);
+                    cooldown = 10;
+                }
+                case ALREADY_EXISTS -> {
+                    remainingEntries.remove(0);
+                    cooldown = requiresEnergy ? 1 : 2;
+                }
+                case BLOCKED -> {
+                    markBlockedBlock(workingArea.minX + remainingEntries.get(0).x, workingArea.minY + remainingEntries.get(0).y, workingArea.minZ + remainingEntries.get(0).z);
+                    cooldown = 10;
+                }
+                case MISSING_RESOURCE -> {
+                    markBlockedBlock(workingArea.minX + remainingEntries.get(0).x, workingArea.minY + remainingEntries.get(0).y, workingArea.minZ + remainingEntries.get(0).z);
+                    cooldown = 20;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public PlaceResult placeEntry(BlueprintEntry entry) {
+        BlockState currentState = world.getBlockState(workingArea.minX + entry.x, workingArea.minY + entry.y, workingArea.minZ + entry.z);
+        BlockState targetState = null;
+
+        // Try to construct the state from the entry
+        Block targetBlock = BlockRegistry.INSTANCE.get(Identifier.of(entry.id));
+        if (targetBlock != null) {
+            targetState = targetBlock.getDefaultState();
+            // TODO: Properties
+        }
+
+        if (targetState == null) {
+            return PlaceResult.ERROR;
+        }
+
+        if (currentState.isOf(targetState.getBlock())) {
+            removeNeededBlock(targetBlock, entry.meta);
+            return PlaceResult.ALREADY_EXISTS;
+        }
+
+        if (!currentState.isAir()) {
+            return PlaceResult.BLOCKED;
+        }
+
+        if (findAndConsume(targetState, entry.meta)) {
+            world.setBlockState(workingArea.minX + entry.x, workingArea.minY + entry.y, workingArea.minZ + entry.z, targetState, entry.meta);
+            removeNeededBlock(targetBlock, entry.meta);
+        } else {
+            return PlaceResult.MISSING_RESOURCE;
+        }
+
+        return PlaceResult.SUCCESS;
+    }
+
+    public boolean findAndConsume(BlockState state, int meta) {
+        Block block = state.getBlock();
+
+        for (int slot = 1; slot < inventory.size(); slot++) {
+            ItemStack stack = inventory.getStack(slot);
+
+            if (stack == null) {
+                continue;
+            }
+
+            if (stack.getItem() instanceof LeavesBlockItem blockItem) {
+                if (blockItem.getBlock() == block && (blockItem.getPlacementMetadata(stack.getDamage()) - 8) == meta) {
+                    if (inventory.removeStack(slot, 1).count >= 1) {
+                        return true;
+                    }
+                }
+            }
+
+            if (stack.getItem() instanceof BlockItem blockItem) {
+                if (blockItem.getBlock() == block && blockItem.getPlacementMetadata(stack.getDamage()) == meta) {
+                    if (inventory.removeStack(slot, 1).count >= 1) {
+                        return true;
+                    }
+                }
+            }
+
+            if (stack.getItem() instanceof SecondaryBlockItem blockItem) {
+                if (blockItem.id == block.id && blockItem.getPlacementMetadata(stack.getDamage()) == meta) {
+                    if (inventory.removeStack(slot, 1).count >= 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void calculateNeededBlocks() {
+        neededBlockEntries.clear();
+        for (BlueprintEntry entry : blueprint.entries) {
+            Block block = BlockRegistry.INSTANCE.get(Identifier.of(entry.id));
+            if (block != null) {
+                addNeededBlock(block, entry.meta);
+            }
+        }
+    }
+
+    public void addNeededBlock(Block block, int meta) {
+        neededBlockEntries.putIfAbsent(block.id << 4 | meta & 0b1111, new NeededBlockEntry(block, meta));
+        neededBlockEntries.get(block.id << 4 | meta & 0b1111).count++;
+    }
+
+    public void removeNeededBlock(Block block, int meta) {
+        NeededBlockEntry entry = neededBlockEntries.get(block.id << 4 | meta & 0b1111);
+        entry.count--;
+
+        if (entry.count <= 0) {
+            neededBlockEntries.remove(block.id << 4 | meta & 0b1111);
+        }
+    }
+
+    public void markBlockedBlock(int x, int y, int z) {
+        double density = 0.2D;
+
+        for (double xPos = x; xPos <= x + 1; xPos += density) {
+            ParticleHelper.addParticle(world, "reddust", xPos, y, z, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double zPos = z; zPos <= z + 1; zPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x, y, zPos, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double yPos = y; yPos <= y + 1; yPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x, yPos, z, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double xPos = x; xPos <= x + 1; xPos += density) {
+            ParticleHelper.addParticle(world, "reddust", xPos, y, z + 1, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double zPos = z; zPos <= z + 1; zPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x + 1, y, zPos, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double yPos = y; yPos <= y + 1; yPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x + 1, yPos, z, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double xPos = x; xPos <= x + 1; xPos += density) {
+            ParticleHelper.addParticle(world, "reddust", xPos, y + 1, z, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double zPos = z; zPos <= z + 1; zPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x, y + 1, zPos, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double yPos = y; yPos <= y + 1; yPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x, yPos, z + 1, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double xPos = x; xPos <= x + 1; xPos += density) {
+            ParticleHelper.addParticle(world, "reddust", xPos, y + 1, z + 1, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double zPos = z; zPos <= z + 1; zPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x + 1, y + 1, zPos, 1.0D, 0.0D, 0.0D, 16);
+        }
+
+        for (double yPos = y; yPos <= y + 1; yPos += density) {
+            ParticleHelper.addParticle(world, "reddust", x + 1, yPos, z + 1, 1.0D, 0.0D, 0.0D, 16);
+        }
+    }
+
+    public boolean hasBlueprint() {
+        ItemStack inputStack = inventory.getStack(0);
+
+        if (inputStack == null) {
+            return false;
+        }
+
+        if (inputStack.getItem() instanceof BuilderBlueprintItem || inputStack.getItem() instanceof BuilderTemplateItem) {
+            return inputStack.getStationNbt().getBoolean("written");
+        }
+
+        return false;
+    }
+
+    // Inventory
+    @Override
+    public int size() {
+        return inventory.size();
+    }
+
+    @Override
+    public ItemStack getStack(int slot) {
+        return inventory.getStack(slot);
+    }
+
+    @Override
+    public ItemStack removeStack(int slot, int amount) {
+        return inventory.removeStack(slot, amount);
+    }
+
+    @Override
+    public void setStack(int slot, ItemStack stack) {
+        inventory.setStack(slot, stack);
+    }
+
+    @Override
+    public String getName() {
+        return inventory.getName();
+    }
+
+    @Override
+    public int getMaxCountPerStack() {
+        return inventory.getMaxCountPerStack();
+    }
+
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
+        return inventory.canPlayerUse(player);
+    }
+
+    // NBT
+    @Override
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        inventory.writeNbt(nbt);
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        inventory.readNbt(nbt);
+    }
+
+    // IPowerReceptor
+    @Override
+    public PowerHandler.PowerReceiver getPowerReceiver(Direction side) {
+        return powerHandler.getPowerReceiver();
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
+    }
+
+    // HasWork
+    @Override
+    public boolean hasWork() {
+        return state == BuilderState.BUILDING;
+    }
+
+    public enum BuilderState {
+        IDLE,
+        READY,
+        BUILDING,
+        STOPPED
+    }
+
+    public enum PlaceResult {
+        SUCCESS,
+        ERROR,
+        ALREADY_EXISTS,
+        BLOCKED,
+        MISSING_RESOURCE
+    }
+
+    public static class NeededBlockEntry {
+        public Block block;
+        public int meta;
+        public int count;
+
+        public NeededBlockEntry(Block block, int meta) {
+            this.block = block;
+            this.meta = meta;
+            this.count = 0;
+        }
+    }
+}

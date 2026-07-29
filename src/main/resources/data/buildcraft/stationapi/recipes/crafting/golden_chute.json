@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "igi",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "tag": "c:ingots/gold"
+    },
+    "c": {
+      "tag": "c:chests/wooden"
+    },
+    "g": {
+      "tag": "c:gears/iron"
+    }
+  },
+  "result": {
+    "item": "buildcraft:golden_chute"
+  }
+}

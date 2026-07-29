@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "package": "malicedev.buildcraft.mixin",
+  "compatibilityLevel": "JAVA_${java}",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "BlockMixin",
+    "CraftingRecipeManagerMixin"
+  ],
+  "server": [
+    "ServerPlayerEntityMixin",
+    "ServerPlayerInteractionManagerMixin"
+  ],
+  "client": [
+    "ArsenicItemRendererMixin",
+    "ArsenicOverlayRendererMixin",
+    "BlockRenderManagerMixin",
+    "ChunkBuilderMixin",
+    "InteractionManagerMixin",
+    "MinecraftMixin",
+    "WorldRendererMixin"
+  ]
+}
