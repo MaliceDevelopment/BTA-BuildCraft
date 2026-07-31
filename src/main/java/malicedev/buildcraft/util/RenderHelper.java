@@ -6,7 +6,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.platform.Lighting;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 public class RenderHelper {

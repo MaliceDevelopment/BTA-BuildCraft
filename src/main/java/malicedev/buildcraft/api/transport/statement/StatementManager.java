@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.*;
 

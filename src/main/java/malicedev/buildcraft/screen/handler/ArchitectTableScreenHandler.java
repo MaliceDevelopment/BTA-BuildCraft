@@ -7,16 +7,16 @@ import malicedev.buildcraft.inventory.slot.ArchitectTableOutputSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 
 public class ArchitectTableScreenHandler extends ScreenHandler {
-    public final PlayerEntity player;
+    public final Player player;
     public final Inventory playerInventory;
 
     public final ArchitectTableBlockEntity blockEntity;
@@ -25,7 +25,7 @@ public class ArchitectTableScreenHandler extends ScreenHandler {
 
 
 
-    public ArchitectTableScreenHandler(PlayerEntity player, ArchitectTableBlockEntity blockEntity) {
+    public ArchitectTableScreenHandler(Player player, ArchitectTableBlockEntity blockEntity) {
         this.player = player;
         this.playerInventory = player.inventory;
         this.blockEntity = blockEntity;
@@ -115,13 +115,13 @@ public class ArchitectTableScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack onSlotClick(int index, int button, boolean shift, PlayerEntity player) {
+    public ItemStack onSlotClick(int index, int button, boolean shift, Player player) {
         blockEntity.lastTouchedBy = player.name;
         return super.onSlotClick(index, button, shift, player);
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return true;
     }
 }

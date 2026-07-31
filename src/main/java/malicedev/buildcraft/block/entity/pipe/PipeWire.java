@@ -2,7 +2,7 @@ package malicedev.buildcraft.block.entity.pipe;
 
 import malicedev.buildcraft.Buildcraft;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 
 import java.util.function.Supplier;
 

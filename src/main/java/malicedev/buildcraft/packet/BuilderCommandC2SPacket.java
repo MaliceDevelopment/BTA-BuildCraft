@@ -3,7 +3,7 @@ package malicedev.buildcraft.packet;
 import malicedev.buildcraft.screen.handler.BuilderScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
@@ -59,7 +59,7 @@ public class BuilderCommandC2SPacket extends Packet implements ManagedPacket<Bui
 
     @Environment(EnvType.SERVER)
     public void handleServer(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
+        Player player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
         if (player.currentScreenHandler instanceof BuilderScreenHandler builderHandler) {
             switch (data) {
                 case 0 -> {

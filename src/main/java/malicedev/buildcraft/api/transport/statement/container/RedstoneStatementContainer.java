@@ -1,6 +1,6 @@
 package malicedev.buildcraft.api.transport.statement.container;
 
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public interface RedstoneStatementContainer {

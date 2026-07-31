@@ -1,6 +1,6 @@
 package malicedev.buildcraft.util;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.recipe.FuelRegistry;
 
 public class FuelUtil {

@@ -1,6 +1,6 @@
 package malicedev.buildcraft.recipe.machine.output;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 
 import java.util.Random;
 

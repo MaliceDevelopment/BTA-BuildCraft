@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
     @Shadow
-    public ClientPlayerEntity player;
+    public ClientPlayer player;
 
     @Inject(method = "tick", at = @At("HEAD"))
     void tickScreenHandler(CallbackInfo ci){

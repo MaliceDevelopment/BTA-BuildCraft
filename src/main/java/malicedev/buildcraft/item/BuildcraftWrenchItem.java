@@ -2,14 +2,13 @@ package malicedev.buildcraft.item;
 
 import malicedev.buildcraft.api.core.Debuggable;
 import malicedev.uniwrench.api.WrenchMode;
-import malicedev.uniwrench.item.WrenchBase;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-public class BuildcraftWrenchItem extends WrenchBase {
+public class 	BuildcraftWrenchItem {
     public BuildcraftWrenchItem(Identifier identifier) {
         super(identifier);
         addWrenchMode(WrenchMode.MODE_WRENCH);
@@ -20,7 +19,7 @@ public class BuildcraftWrenchItem extends WrenchBase {
     }
 
     @Override
-    public boolean wrenchRightClick(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         if (wrenchMode == WrenchMode.MODE_DEBUG && world.getBlockState(x,y,z).getBlock() instanceof Debuggable debuggable) {
             debuggable.debug(stack, player, isSneaking, world, x, y, z, side);
             return true;

@@ -7,8 +7,8 @@ import malicedev.nyalib.fluid.FluidStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -103,7 +103,7 @@ public class TankBlock extends TemplateBlockWithEntity {
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if(world.getBlockEntity(x, y, z) instanceof TankBlockEntity blockEntity){
             if(player.getHand() != null){
                 ItemStack hand = player.getHand();

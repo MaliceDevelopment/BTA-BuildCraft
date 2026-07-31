@@ -2,7 +2,7 @@ package malicedev.buildcraft.api.transport.statement;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import net.modificationstation.stationapi.api.util.Identifier;

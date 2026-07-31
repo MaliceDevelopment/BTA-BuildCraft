@@ -2,10 +2,10 @@ package malicedev.buildcraft.screen;
 
 import malicedev.buildcraft.inventory.slot.AdvancedSlot;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.ItemRenderer;
 import net.minecraft.client.render.platform.Lighting;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;

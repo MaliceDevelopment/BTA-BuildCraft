@@ -9,14 +9,14 @@ import malicedev.buildcraft.block.entity.pipe.pluggable.PipePluggable;
 import malicedev.buildcraft.util.raycast.PipeRaycastResult;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class GateCopierItem extends TemplateItem {
     public GateCopierItem(Identifier identifier) {

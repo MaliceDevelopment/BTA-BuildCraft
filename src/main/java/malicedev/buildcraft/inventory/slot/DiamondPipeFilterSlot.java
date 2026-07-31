@@ -1,9 +1,9 @@
 package malicedev.buildcraft.inventory.slot;
 
 import malicedev.buildcraft.block.entity.pipe.DiamondPipeBlockEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 public class DiamondPipeFilterSlot extends Slot {
     public final Inventory inventory;

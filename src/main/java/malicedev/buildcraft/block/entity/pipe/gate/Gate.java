@@ -15,13 +15,13 @@ import malicedev.buildcraft.init.StatementListener;
 import malicedev.buildcraft.item.GateItem;
 import malicedev.buildcraft.screen.handler.GateInterfaceScreenHandler;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.gui.screen.container.GuiHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -281,7 +281,7 @@ public final class Gate implements malicedev.buildcraft.api.transport.gate.Gate,
         redstoneOutput = data.getByte("redstoneOutput");
     }
 
-    public void openGui(PlayerEntity player, PipeBlockEntity blockEntity) {
+    public void openGui(Player player, PipeBlockEntity blockEntity) {
         if (!player.world.isRemote) {
             GuiHelper.openGUI(player, Buildcraft.NAMESPACE.id("gate"), blockEntity, new GateInterfaceScreenHandler(player.inventory, blockEntity));
             ((GateInterfaceScreenHandler)player.currentScreenHandler).setGate(direction.ordinal());

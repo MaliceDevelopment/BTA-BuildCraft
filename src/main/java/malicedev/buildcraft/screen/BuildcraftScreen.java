@@ -3,7 +3,7 @@ package malicedev.buildcraft.screen;
 import malicedev.buildcraft.util.ScreenUtil;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.screen.ScreenHandler;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import org.lwjgl.opengl.GL11;

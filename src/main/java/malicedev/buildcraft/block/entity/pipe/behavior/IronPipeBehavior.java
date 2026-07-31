@@ -12,10 +12,10 @@ import malicedev.buildcraft.block.entity.pipe.statement.ActionPipeDirection;
 import malicedev.buildcraft.entity.TravellingItemEntity;
 import malicedev.buildcraft.init.StatementListener;
 import malicedev.uniwrench.api.WrenchMode;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -71,7 +71,7 @@ public class IronPipeBehavior extends PipeBehavior {
     }
 
     @Override
-    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         Object2ObjectOpenHashMap<Direction, PipeConnectionType> connections = blockEntity.connections;
 
         // Check if there is a side to switch to

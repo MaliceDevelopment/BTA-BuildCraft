@@ -1,7 +1,7 @@
 package malicedev.buildcraft.api.transport.gate;
 
 import com.google.common.collect.HashBiMap;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.*;

@@ -3,8 +3,8 @@ package malicedev.buildcraft.client.render;
 import malicedev.buildcraft.block.entity.pipe.LaserData;
 import malicedev.buildcraft.client.render.entity.EntityBlockRenderer;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.texture.TextureManager;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.render.TextureManager;
+import net.minecraft.core.util.helper.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class LaserRenderer {

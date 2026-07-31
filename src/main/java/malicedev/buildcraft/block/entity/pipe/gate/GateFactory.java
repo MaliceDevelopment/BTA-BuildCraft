@@ -5,11 +5,11 @@ import malicedev.buildcraft.api.transport.gate.GateExpansionController;
 import malicedev.buildcraft.api.transport.gate.GateExpansions;
 import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.item.GateItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public final class GateFactory {
     public static Gate makeGate(PipeBlockEntity pipe, GateMaterial material, GateLogic logic, Direction direction) {

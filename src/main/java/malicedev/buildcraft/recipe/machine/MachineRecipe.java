@@ -5,7 +5,7 @@ import malicedev.buildcraft.Buildcraft;
 import malicedev.buildcraft.recipe.machine.input.RecipeInput;
 import malicedev.buildcraft.recipe.machine.output.RecipeOutput;
 import malicedev.buildcraft.recipe.machine.output.RecipeOutputType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Random;

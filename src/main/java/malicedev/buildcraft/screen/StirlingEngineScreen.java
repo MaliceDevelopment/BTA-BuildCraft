@@ -2,13 +2,13 @@ package malicedev.buildcraft.screen;
 
 import malicedev.buildcraft.block.entity.StirlingEngineBlockEntity;
 import malicedev.buildcraft.screen.handler.StirlingEngineScreenHandler;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import org.lwjgl.opengl.GL11;
 
 public class StirlingEngineScreen extends EngineScreen {
     final StirlingEngineBlockEntity engine;
 
-    public StirlingEngineScreen(PlayerEntity player, StirlingEngineBlockEntity engine) {
+    public StirlingEngineScreen(Player player, StirlingEngineBlockEntity engine) {
         super(new StirlingEngineScreenHandler(player, engine), engine);
         this.engine = engine;
     }

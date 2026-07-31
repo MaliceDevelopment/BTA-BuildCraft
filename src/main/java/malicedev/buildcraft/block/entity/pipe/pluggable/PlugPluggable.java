@@ -5,10 +5,10 @@ import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.client.render.PipePluggableRenderer;
 import malicedev.buildcraft.client.render.pluggable.PlugPluggableRenderer;
 import malicedev.buildcraft.util.MatrixTransformation;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Box;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

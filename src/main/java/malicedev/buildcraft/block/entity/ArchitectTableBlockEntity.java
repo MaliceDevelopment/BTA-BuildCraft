@@ -9,9 +9,9 @@ import malicedev.buildcraft.item.BuilderTemplateItem;
 import malicedev.buildcraft.util.Constants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.state.property.Properties;
@@ -150,7 +150,7 @@ public class ArchitectTableBlockEntity extends AreaWorkerBlockEntity implements 
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return inventory.canPlayerUse(player);
     }
 

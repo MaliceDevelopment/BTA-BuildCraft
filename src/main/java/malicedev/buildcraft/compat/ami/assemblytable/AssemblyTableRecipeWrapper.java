@@ -6,7 +6,7 @@ import malicedev.buildcraft.recipe.machine.output.RecipeOutput;
 import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.util.HoverChecker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

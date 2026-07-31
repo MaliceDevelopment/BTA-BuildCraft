@@ -4,11 +4,11 @@ import malicedev.buildcraft.block.entity.FloodGateBlockEntity;
 import malicedev.uniwrench.api.WrenchMode;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class FloodGateBlock extends TemplateMachineBlock {
     public FloodGateBlock(Identifier identifier, Material material) {
@@ -21,7 +21,7 @@ public class FloodGateBlock extends TemplateMachineBlock {
     }
 
     @Override
-    public boolean wrenchRightClick(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         if (wrenchMode == WrenchMode.MODE_WRENCH) {
             if (isSneaking) {
                 return super.wrenchRightClick(stack, player, isSneaking, world, x, y, z, side, wrenchMode);

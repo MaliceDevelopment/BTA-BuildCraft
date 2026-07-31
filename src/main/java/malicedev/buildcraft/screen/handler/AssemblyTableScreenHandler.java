@@ -4,21 +4,21 @@ import malicedev.buildcraft.block.entity.AssemblyTableBlockEntity;
 import malicedev.buildcraft.packet.AssemblyTableUpdateS2CPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 
 public class AssemblyTableScreenHandler extends ScreenHandler {
-    public PlayerEntity player;
+    public Player player;
     public Inventory playerInventory;
     public AssemblyTableBlockEntity blockEntity;
 
     public int scaledProgress;
 
-    public AssemblyTableScreenHandler(PlayerEntity player, AssemblyTableBlockEntity blockEntity) {
+    public AssemblyTableScreenHandler(Player player, AssemblyTableBlockEntity blockEntity) {
         this.player = player;
         this.playerInventory = player.inventory;
         this.blockEntity = blockEntity;
@@ -97,7 +97,7 @@ public class AssemblyTableScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return true;
     }
 }

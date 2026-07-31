@@ -12,7 +12,7 @@ import malicedev.buildcraft.inventory.slot.AdvancedSlot;
 import malicedev.buildcraft.inventory.slot.StatementParameterSlot;
 import malicedev.buildcraft.inventory.slot.StatementSlot;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.player.inventory.container.Container;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;

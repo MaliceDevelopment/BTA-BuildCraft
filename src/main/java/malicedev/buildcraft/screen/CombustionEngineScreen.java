@@ -5,7 +5,7 @@ import malicedev.buildcraft.screen.handler.CombustionEngineScreenHandler;
 import malicedev.buildcraft.util.ScreenUtil;
 import malicedev.nyalib.fluid.FluidStack;
 import net.minecraft.client.render.Tessellator;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.modificationstation.stationapi.api.client.StationRenderAPI;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public class CombustionEngineScreen extends EngineScreen {
     CombustionEngineBlockEntity engine;
 
-    public CombustionEngineScreen(PlayerEntity player, CombustionEngineBlockEntity engine) {
+    public CombustionEngineScreen(Player player, CombustionEngineBlockEntity engine) {
         super(new CombustionEngineScreenHandler(player, engine), engine);
         this.engine = engine;
     }

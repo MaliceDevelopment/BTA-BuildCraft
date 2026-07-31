@@ -3,9 +3,9 @@ package malicedev.buildcraft.block.entity;
 import malicedev.buildcraft.util.FuelUtil;
 import malicedev.buildcraft.util.MathUtil;
 import malicedev.nyalib.fluid.FluidBucket;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.DataInputStream;

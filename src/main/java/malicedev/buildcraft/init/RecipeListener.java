@@ -19,7 +19,7 @@ import malicedev.nyalib.fluid.Fluid;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
 

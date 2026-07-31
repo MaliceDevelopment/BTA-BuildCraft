@@ -8,9 +8,9 @@ import malicedev.buildcraft.block.entity.pipe.pluggable.PipePluggable;
 import malicedev.buildcraft.block.entity.pipe.PipeType;
 import malicedev.buildcraft.block.entity.pipe.pluggable.LensPluggable;
 import malicedev.buildcraft.util.ColorUtil;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class LensItem extends TemplateItem implements PipePluggableItem {
     public final int color;

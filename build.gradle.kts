@@ -29,6 +29,10 @@ repositories {
         patternLayout { artifact("v1/[organisation]/[revision]/[module].jar") }
         metadataSources { artifact() }
     }
+	ivy("https://github.com/Better-than-Adventure") {
+		patternLayout { artifact("[organisation]/releases/download/[revision]/[module]-bta-[revision].jar") }
+		metadataSources { artifact() }
+	}
 }
 dependencies {
     minecraft("::${libs.versions.bta.get()}")
@@ -37,6 +41,11 @@ dependencies {
 	// included in builds as a runtime dependency
 	implementation(libs.loader)
 	implementation(libs.halplibe) // If you do not need halplibe you can delete this line
+	//Catalyst
+	implementation("sunsetsatellite:catalyst-core:3.0.0-beta.1")
+	implementation("sunsetsatellite:catalyst-energy:3.0.0-beta.1")
+	implementation("sunsetsatellite:catalyst-fluids:3.0.0-beta.1")
+	implementation("sunsetsatellite:catalyst-screens:1.0.0-beta.1")
 
 	// Only required at compilation
 	// provides documentation, can be removed if that isn't needed

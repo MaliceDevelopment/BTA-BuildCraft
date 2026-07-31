@@ -1,10 +1,13 @@
 package malicedev.buildcraft.item;
 
-import net.modificationstation.stationapi.api.template.item.TemplateItem;
-import net.modificationstation.stationapi.api.util.Identifier;
+import net.minecraft.core.item.Item;
+import net.minecraft.core.util.collection.NamespaceID;
 
-public class PipeWireItem extends TemplateItem {
-    public PipeWireItem(Identifier identifier) {
-        super(identifier);
+
+import javax.xml.stream.events.Namespace;
+
+public class PipeWireItem extends Item {
+    public PipeWireItem(String namespaceID,String translationkey,int id) {
+        super(namespaceID,translationkey,id);
     }
 }

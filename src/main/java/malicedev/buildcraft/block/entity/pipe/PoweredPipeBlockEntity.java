@@ -4,7 +4,7 @@ import malicedev.buildcraft.api.energy.IPowerReceptor;
 import malicedev.buildcraft.api.energy.PowerHandler;
 import malicedev.buildcraft.block.PipeBlock;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class PoweredPipeBlockEntity extends PipeBlockEntity implements IPowerReceptor {
     protected PowerHandler powerHandler;

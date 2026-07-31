@@ -12,7 +12,7 @@ import net.glasslauncher.mods.alwaysmoreitems.api.recipe.RecipeWrapper;
 import net.glasslauncher.mods.alwaysmoreitems.gui.DrawableHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class IntegrationTableRecipeCategory implements RecipeCategory {

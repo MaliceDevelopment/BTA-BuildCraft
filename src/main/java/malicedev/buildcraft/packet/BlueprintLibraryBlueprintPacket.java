@@ -4,8 +4,8 @@ import malicedev.buildcraft.item.*;
 import malicedev.buildcraft.screen.handler.BlueprintLibraryScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.NetworkHandler;
@@ -88,7 +88,7 @@ public class BlueprintLibraryBlueprintPacket extends Packet implements ManagedPa
 
     @Override
     public void apply(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
+        Player player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
         World world = player.world;
 
         if (blueprintData == null) {

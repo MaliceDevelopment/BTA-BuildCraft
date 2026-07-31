@@ -9,9 +9,9 @@ import malicedev.nyalib.capability.CapabilityHelper;
 import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Locale;
 

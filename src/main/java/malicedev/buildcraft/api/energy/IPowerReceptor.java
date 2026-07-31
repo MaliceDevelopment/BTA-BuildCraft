@@ -1,7 +1,7 @@
 package malicedev.buildcraft.api.energy;
 
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 /**
  * This interface should be implemented by any Tile Entity that wishes to be

@@ -7,7 +7,7 @@ import malicedev.buildcraft.client.render.PipePluggableRenderer;
 import malicedev.buildcraft.client.render.block.entity.PipeBlockEntityRenderer;
 import malicedev.buildcraft.block.entity.pipe.pluggable.GatePluggable;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class GatePluggableRenderer implements PipePluggableRenderer, PipePluggableDynamicRenderer {
     public static final GatePluggableRenderer INSTANCE = new GatePluggableRenderer();

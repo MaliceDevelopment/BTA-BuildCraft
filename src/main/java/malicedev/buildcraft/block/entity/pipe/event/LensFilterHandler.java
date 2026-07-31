@@ -3,7 +3,7 @@ package malicedev.buildcraft.block.entity.pipe.event;
 import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.block.entity.pipe.pluggable.PipePluggable;
 import malicedev.buildcraft.block.entity.pipe.pluggable.LensPluggable;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.LinkedList;
 

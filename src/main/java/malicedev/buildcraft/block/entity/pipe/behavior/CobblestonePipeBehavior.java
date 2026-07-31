@@ -2,7 +2,7 @@ package malicedev.buildcraft.block.entity.pipe.behavior;
 
 import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.block.entity.pipe.PipeConnectionType;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class CobblestonePipeBehavior extends PipeBehavior {
     @Override

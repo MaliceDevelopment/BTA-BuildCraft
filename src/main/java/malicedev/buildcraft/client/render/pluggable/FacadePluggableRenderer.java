@@ -14,7 +14,7 @@ import malicedev.buildcraft.util.TextureUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.world.BlockView;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class FacadePluggableRenderer implements PipePluggableRenderer {
 

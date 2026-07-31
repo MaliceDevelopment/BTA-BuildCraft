@@ -3,7 +3,7 @@ package malicedev.buildcraft.inventory.slot;
 import malicedev.buildcraft.screen.AdvancedInterfaceScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.client.StationRenderAPI;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;

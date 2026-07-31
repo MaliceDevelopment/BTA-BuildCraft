@@ -4,7 +4,7 @@ import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.entity.TravellingItemEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.List;
 

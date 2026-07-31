@@ -4,21 +4,21 @@ import malicedev.buildcraft.block.entity.BuilderBlockEntity;
 import malicedev.buildcraft.inventory.slot.ArchitectTableInputSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 public class BuilderScreenHandler extends ScreenHandler {
     public BuilderBlockEntity blockEntity;
-    public PlayerEntity player;
+    public Player player;
     public Inventory playerInventory;
 
     int builderStatus = 0;
     int remainingBlocks = 0;
 
-    public BuilderScreenHandler(PlayerEntity player, BuilderBlockEntity blockEntity) {
+    public BuilderScreenHandler(Player player, BuilderBlockEntity blockEntity) {
         this.player = player;
         this.playerInventory = player.inventory;
         this.blockEntity = blockEntity;
@@ -102,7 +102,7 @@ public class BuilderScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return true;
     }
 }

@@ -7,18 +7,18 @@ import malicedev.buildcraft.screen.handler.ArchitectTableScreenHandler;
 import malicedev.buildcraft.screen.widget.TransparentTextFieldWidget;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class ArchitectTableScreen extends HandledScreen {
     public final ArchitectTableBlockEntity blockEntity;
-    public final PlayerEntity player;
+    public final Player player;
 
     public TextFieldWidget nameField;
 
-    public ArchitectTableScreen(PlayerEntity player, ArchitectTableBlockEntity blockEntity) {
+    public ArchitectTableScreen(Player player, ArchitectTableBlockEntity blockEntity) {
         super(new ArchitectTableScreenHandler(player, blockEntity));
         this.blockEntity = blockEntity;
         this.player = player;

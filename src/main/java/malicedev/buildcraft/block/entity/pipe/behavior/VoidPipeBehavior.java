@@ -11,7 +11,7 @@ import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter;
 import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter.FailedPathingResult;
 import malicedev.buildcraft.entity.TravellingItemEntity;
 import malicedev.nyalib.fluid.FluidStack;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class VoidPipeBehavior extends PipeBehavior {
     @Override

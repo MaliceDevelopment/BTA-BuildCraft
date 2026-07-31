@@ -3,19 +3,19 @@ package malicedev.buildcraft.screen.handler;
 import malicedev.buildcraft.block.entity.CombustionEngineBlockEntity;
 import malicedev.buildcraft.inventory.slot.CombustionEngineFuelSlot;
 import malicedev.buildcraft.inventory.slot.InvisibleFluidSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class CombustionEngineScreenHandler extends ScreenHandler {
-    private final PlayerEntity player;
+    private final Player player;
     private final Inventory playerInventory;
 
     private final CombustionEngineBlockEntity engine;
 
-    public CombustionEngineScreenHandler(PlayerEntity player, CombustionEngineBlockEntity engine) {
+    public CombustionEngineScreenHandler(Player player, CombustionEngineBlockEntity engine) {
         this.player = player;
         this.playerInventory = player.inventory;
         this.engine = engine;
@@ -82,7 +82,7 @@ public class CombustionEngineScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return true;
     }
 }

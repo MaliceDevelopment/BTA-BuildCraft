@@ -3,17 +3,17 @@ package malicedev.buildcraft.screen.handler;
 import malicedev.buildcraft.block.entity.AutocraftingTableBlockEntity;
 import malicedev.buildcraft.inventory.AutocraftingTableInventory;
 import malicedev.buildcraft.inventory.slot.AutocraftingTableResultSlot;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.recipe.CraftingRecipeManager;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 public class AutocraftingTableScreenHandler extends ScreenHandler {
-    public PlayerEntity player;
+    public Player player;
     public Inventory playerInventory;
     public AutocraftingTableBlockEntity blockEntity;
 
@@ -21,7 +21,7 @@ public class AutocraftingTableScreenHandler extends ScreenHandler {
     public Inventory craftingResult;
     public Slot craftingResultSlot;
 
-    public AutocraftingTableScreenHandler(PlayerEntity player, AutocraftingTableBlockEntity blockEntity) {
+    public AutocraftingTableScreenHandler(Player player, AutocraftingTableBlockEntity blockEntity) {
         this.player = player;
         this.playerInventory = player.inventory;
         this.blockEntity = blockEntity;
@@ -69,7 +69,7 @@ public class AutocraftingTableScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return true;
     }
 }

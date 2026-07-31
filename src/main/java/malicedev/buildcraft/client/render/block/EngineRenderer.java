@@ -4,8 +4,8 @@ import malicedev.buildcraft.api.energy.EnergyStage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.texture.TextureManager;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.client.render.TextureManager;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 

@@ -11,7 +11,7 @@ import malicedev.buildcraft.util.ColorUtil;
 import malicedev.buildcraft.util.MatrixTransformation;
 import malicedev.buildcraft.util.RenderHelper;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class LensPluggableRenderer implements PipePluggableRenderer {
     public static final PipePluggableRenderer INSTANCE = new LensPluggableRenderer();

@@ -7,7 +7,7 @@ import malicedev.nyalib.fluid.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.LiquidBlock;
 import net.minecraft.block.StillLiquidBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;

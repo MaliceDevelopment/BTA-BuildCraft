@@ -6,16 +6,16 @@ import malicedev.buildcraft.screen.handler.IntegrationTableScreenHandler;
 import malicedev.buildcraft.util.ScreenUtil;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import org.lwjgl.opengl.GL11;
 
 public class IntegrationTableScreen extends BuildcraftScreen {
     IntegrationTableBlockEntity blockEntity;
     ItemRenderer itemRenderer;
-    PlayerEntity player;
+    Player player;
 
-    public IntegrationTableScreen(PlayerEntity player, IntegrationTableBlockEntity blockEntity) {
+    public IntegrationTableScreen(Player player, IntegrationTableBlockEntity blockEntity) {
         super(new IntegrationTableScreenHandler(player, blockEntity), blockEntity);
         this.blockEntity = blockEntity;
         this.backgroundHeight = 165;

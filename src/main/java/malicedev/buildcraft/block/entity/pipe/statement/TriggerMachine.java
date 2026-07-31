@@ -8,7 +8,7 @@ import malicedev.buildcraft.api.transport.statement.TriggerExternal;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class TriggerMachine extends BCStatement implements TriggerExternal {
     boolean active;

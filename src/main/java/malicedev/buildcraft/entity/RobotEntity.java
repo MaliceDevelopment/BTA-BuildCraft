@@ -6,7 +6,7 @@ import malicedev.buildcraft.block.entity.AreaWorkerBlockEntity;
 import malicedev.buildcraft.block.entity.pipe.LaserData;
 import malicedev.buildcraft.util.Constants;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -51,7 +51,7 @@ public class RobotEntity extends Entity implements EntitySpawnDataProvider {
     }
 
     @Override
-    public boolean interact(PlayerEntity player) {
+    public boolean interact(Player player) {
         return true;
     }
 

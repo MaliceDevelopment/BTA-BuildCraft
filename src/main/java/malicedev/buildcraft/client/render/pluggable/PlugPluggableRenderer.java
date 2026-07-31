@@ -8,7 +8,7 @@ import malicedev.buildcraft.client.render.PipePluggableRenderer;
 import malicedev.buildcraft.init.TextureListener;
 import malicedev.buildcraft.util.MatrixTransformation;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class PlugPluggableRenderer implements PipePluggableRenderer {

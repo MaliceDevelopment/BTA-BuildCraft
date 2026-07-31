@@ -26,10 +26,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.packet.Packet;
@@ -37,7 +37,7 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.registry.BlockRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
@@ -135,7 +135,7 @@ public class PipeBlockEntity extends BlockEntity implements SynchedBlockEntity, 
             if(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER){
                 Packet updatePacket = getBlockEntityUpdatePacket();
                 for(Object o : world.players){
-                    PlayerEntity player = (PlayerEntity) o;
+                    Player player = (PlayerEntity) o;
                     if(player.getDistance(x, y, z) < 40){
                         PacketHelper.sendTo(player, updatePacket);
                     }
@@ -344,7 +344,7 @@ public class PipeBlockEntity extends BlockEntity implements SynchedBlockEntity, 
         return setPluggable(direction, pluggable, null);
     }
 
-    public boolean setPluggable(Direction direction, PipePluggable pluggable, PlayerEntity player){
+    public boolean setPluggable(Direction direction, PipePluggable pluggable, Player player){
         if(world != null && world.isRemote){
             return false;
         }
@@ -704,7 +704,7 @@ public class PipeBlockEntity extends BlockEntity implements SynchedBlockEntity, 
     }
 
     @Environment(EnvType.SERVER)
-    public void onBlockEntityUpdatePacket(ServerPlayerEntity player) {
+    public void onBlockEntityUpdatePacket(ServerPlayer player) {
         //PacketHelper.sendTo(player, getBlockEntityUpdatePacket());
         transporter.onBlockEntityUpdatePacket(player);
     }
@@ -876,7 +876,7 @@ public class PipeBlockEntity extends BlockEntity implements SynchedBlockEntity, 
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return true;
     }
     // End of Dummy Inventory

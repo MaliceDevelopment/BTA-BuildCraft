@@ -1,7 +1,7 @@
 package malicedev.buildcraft.api.transport.statement.container;
 
 import malicedev.buildcraft.api.transport.statement.StatementContainer;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 /**
  * Created by asie on 3/14/15.

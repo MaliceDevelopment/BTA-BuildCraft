@@ -3,13 +3,13 @@ package malicedev.buildcraft.screen;
 import malicedev.buildcraft.block.entity.AutocraftingTableBlockEntity;
 import malicedev.buildcraft.screen.handler.AutocraftingTableScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import org.lwjgl.opengl.GL11;
 
 public class AutocraftingTableScreen extends HandledScreen {
     public AutocraftingTableBlockEntity blockEntity;
 
-    public AutocraftingTableScreen(PlayerEntity player, AutocraftingTableBlockEntity blockEntity) {
+    public AutocraftingTableScreen(Player player, AutocraftingTableBlockEntity blockEntity) {
         super(new AutocraftingTableScreenHandler(player, blockEntity));
         this.blockEntity = blockEntity;
     }

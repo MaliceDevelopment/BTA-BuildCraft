@@ -5,7 +5,7 @@ import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.block.entity.pipe.transporter.EnergyPipeTransporter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.world.World;
@@ -78,7 +78,7 @@ public class PowerUpdateS2CPacket extends Packet implements ManagedPacket<PowerU
 
     @Environment(EnvType.CLIENT)
     public void handleClient(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
+        Player player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
         World world = player.world;
 
         if (world.getBlockState(x,y,z).getBlock() instanceof PipeBlock pipeBlock && world.getBlockEntity(x,y,z) instanceof PipeBlockEntity pipe && pipe.transporter instanceof EnergyPipeTransporter transporter) {

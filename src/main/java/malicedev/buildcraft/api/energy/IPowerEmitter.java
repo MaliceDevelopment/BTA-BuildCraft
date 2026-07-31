@@ -1,6 +1,6 @@
 package malicedev.buildcraft.api.energy;
 
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 /**
  * Essentially only used for Wooden Power Pipe connection rules.

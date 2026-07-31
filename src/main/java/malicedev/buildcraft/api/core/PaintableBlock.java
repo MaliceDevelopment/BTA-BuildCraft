@@ -1,7 +1,7 @@
 package malicedev.buildcraft.api.core;
 
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public interface PaintableBlock {
     boolean recolorBlock(World world, int x, int y, int z, Direction side, int color);

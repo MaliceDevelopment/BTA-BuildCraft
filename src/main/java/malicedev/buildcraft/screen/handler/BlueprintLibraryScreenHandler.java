@@ -10,17 +10,17 @@ import malicedev.buildcraft.inventory.slot.BlueprintLibraryOutputSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.util.SideUtil;
 
 public class BlueprintLibraryScreenHandler extends ScreenHandler {
-    public final PlayerEntity player;
+    public final Player player;
     public final World world;
     public final Inventory playerInventory;
 
@@ -29,7 +29,7 @@ public class BlueprintLibraryScreenHandler extends ScreenHandler {
     @Environment(EnvType.CLIENT)
     public String selectedBlueprintName;
 
-    public BlueprintLibraryScreenHandler(PlayerEntity player, BlueprintLibraryBlockEntity blockEntity) {
+    public BlueprintLibraryScreenHandler(Player player, BlueprintLibraryBlockEntity blockEntity) {
         this.player = player;
         this.world = player.world;
         this.playerInventory = player.inventory;
@@ -155,7 +155,7 @@ public class BlueprintLibraryScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return true;
     }
 }

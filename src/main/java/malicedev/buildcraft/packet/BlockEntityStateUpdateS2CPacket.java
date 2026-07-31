@@ -3,7 +3,7 @@ package malicedev.buildcraft.packet;
 import malicedev.buildcraft.api.core.Serializable;
 import malicedev.buildcraft.api.core.SynchedBlockEntity;
 import malicedev.buildcraft.registry.StateRegistry;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 import net.modificationstation.stationapi.api.network.packet.ManagedPacket;
@@ -78,7 +78,7 @@ public class BlockEntityStateUpdateS2CPacket extends CoordinatesPacket implement
     @Override
     public void apply(NetworkHandler networkHandler) {
 
-        PlayerEntity player = PlayerHelper.getPlayerFromGame();
+        Player player = PlayerHelper.getPlayerFromGame();
 
         if(player.world.getBlockEntity(x, y, z) instanceof SynchedBlockEntity synchedBlockEntity){
             DataInputStream playbackStream = new DataInputStream(new ByteArrayInputStream(dataBuffer));

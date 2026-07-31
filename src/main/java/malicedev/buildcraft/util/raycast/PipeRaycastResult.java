@@ -2,7 +2,7 @@ package malicedev.buildcraft.util.raycast;
 
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class PipeRaycastResult extends RaycastResult{
     public final Part hitPart;

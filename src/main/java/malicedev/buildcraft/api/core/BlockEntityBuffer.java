@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class BlockEntityBuffer {
     private BlockState blockState = null;

@@ -5,16 +5,16 @@ import malicedev.buildcraft.packet.SelectAssemblyRecipeC2SPacket;
 import malicedev.buildcraft.screen.handler.AssemblyTableScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.util.math.MathHelper;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import org.lwjgl.opengl.GL11;
 
 public class AssemblyTableScreen extends HandledScreen {
     AssemblyTableBlockEntity blockEntity;
     ItemRenderer itemRenderer;
-    PlayerEntity player;
+    Player player;
 
     // Only used when on server
     public int[] resultIds;
@@ -22,7 +22,7 @@ public class AssemblyTableScreen extends HandledScreen {
     public boolean[] selected;
     public boolean[] active;
 
-    public AssemblyTableScreen(PlayerEntity player, AssemblyTableBlockEntity blockEntity) {
+    public AssemblyTableScreen(Player player, AssemblyTableBlockEntity blockEntity) {
         super(new AssemblyTableScreenHandler(player, blockEntity));
         this.blockEntity = blockEntity;
         this.backgroundHeight = 206;

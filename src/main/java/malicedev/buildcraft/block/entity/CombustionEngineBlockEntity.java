@@ -10,9 +10,9 @@ import malicedev.nyalib.fluid.FluidStack;
 import malicedev.nyalib.fluid.FluidTankInfoProvider;
 import malicedev.nyalib.fluid.block.FluidHandler;
 import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.DataInputStream;

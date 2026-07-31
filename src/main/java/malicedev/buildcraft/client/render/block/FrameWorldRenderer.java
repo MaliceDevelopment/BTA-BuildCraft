@@ -7,7 +7,7 @@ import malicedev.buildcraft.util.Constants;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.world.BlockView;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class FrameWorldRenderer {
     public void renderFrame(BlockRenderManager blockRenderManager, BlockView blockView, int x, int y, int z, int blockId, Identifier texture){

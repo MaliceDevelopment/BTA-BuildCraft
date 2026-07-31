@@ -1,8 +1,8 @@
 package malicedev.buildcraft.inventory;
 
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 
 

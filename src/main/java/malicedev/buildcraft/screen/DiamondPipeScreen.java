@@ -4,14 +4,14 @@ import malicedev.buildcraft.block.entity.pipe.DiamondPipeBlockEntity;
 import malicedev.buildcraft.packet.ToggleDiamondPipeFilterC2SPacket;
 import malicedev.buildcraft.screen.handler.DiamondPipeScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import org.lwjgl.opengl.GL11;
 
 public class DiamondPipeScreen extends HandledScreen {
     public DiamondPipeBlockEntity pipe;
 
-    public DiamondPipeScreen(PlayerEntity player, DiamondPipeBlockEntity blockEntity) {
+    public DiamondPipeScreen(Player player, DiamondPipeBlockEntity blockEntity) {
         super(new DiamondPipeScreenHandler(player, blockEntity));
         this.pipe = blockEntity;
         this.backgroundHeight = 222;

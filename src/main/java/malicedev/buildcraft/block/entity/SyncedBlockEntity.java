@@ -6,7 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
@@ -21,7 +21,7 @@ public abstract class SyncedBlockEntity extends BlockEntity implements Serializa
             if(world != null && !world.isRemote){
                 Packet updatePacket = getUpdatePacket();
                 for(Object o : world.players){
-                    PlayerEntity player = (PlayerEntity) o;
+                    Player player = (PlayerEntity) o;
                     if(player.getDistance(x, y, z) < getNetworkUpdateRange()){
                         PacketHelper.sendTo(player, updatePacket);
                     }
@@ -41,7 +41,7 @@ public abstract class SyncedBlockEntity extends BlockEntity implements Serializa
 
     @Environment(EnvType.SERVER)
     @Override
-    public void onBlockEntityUpdatePacket(ServerPlayerEntity player) {
+    public void onBlockEntityUpdatePacket(ServerPlayer player) {
         PacketHelper.sendTo(player, getUpdatePacket());
     }
 }

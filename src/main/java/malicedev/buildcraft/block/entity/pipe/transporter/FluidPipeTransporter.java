@@ -19,12 +19,12 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import net.modificationstation.stationapi.api.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -290,7 +290,7 @@ public class FluidPipeTransporter extends PipeTransporter implements FluidHandle
 
                 if (packet != null) {
                     for (var playerO : world.players) {
-                        if (playerO instanceof PlayerEntity player && player.getDistance(x, y, z) <= Config.PIPE_CONFIG.pipeUpdateDistance) {
+                        if (playerO instanceof Player player && player.getDistance(x, y, z) <= Config.PIPE_CONFIG.pipeUpdateDistance) {
                             PacketHelper.sendTo(player, packet);
                         }
                     }
@@ -563,7 +563,7 @@ public class FluidPipeTransporter extends PipeTransporter implements FluidHandle
 
     @Environment(EnvType.SERVER)
     @Override
-    public void onBlockEntityUpdatePacket(ServerPlayerEntity player) {
+    public void onBlockEntityUpdatePacket(ServerPlayer player) {
         FluidUpdateS2CPacket updatePacket = computeFluidUpdate(true, true);
 
         if (updatePacket != null) {

@@ -1,7 +1,7 @@
 package malicedev.buildcraft.recipe.machine;
 
 import malicedev.buildcraft.Buildcraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.ArrayList;

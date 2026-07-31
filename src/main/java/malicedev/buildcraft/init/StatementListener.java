@@ -14,7 +14,7 @@ import malicedev.buildcraft.event.StatementRegisterEvent;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class StatementListener {
     @Entrypoint.Namespace

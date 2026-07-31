@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 

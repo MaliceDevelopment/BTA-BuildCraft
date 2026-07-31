@@ -3,7 +3,7 @@ package malicedev.buildcraft.api.core;
 import malicedev.buildcraft.util.DirectionUtil;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.DataInputStream;

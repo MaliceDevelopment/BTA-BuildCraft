@@ -3,7 +3,7 @@ package malicedev.buildcraft.block.entity.pipe.event;
 import com.google.common.collect.Multiset;
 import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.nyalib.fluid.FluidStack;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class FluidPipeEvent extends PipeEvent{
     public final FluidStack fluidStack;

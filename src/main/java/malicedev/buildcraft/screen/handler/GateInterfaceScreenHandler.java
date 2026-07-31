@@ -15,17 +15,17 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -127,7 +127,7 @@ public class GateInterfaceScreenHandler extends ScreenHandler implements Command
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return gate != null;
     }
 
@@ -326,7 +326,7 @@ public class GateInterfaceScreenHandler extends ScreenHandler implements Command
     public void receiveCommand(String command, EnvType side, Object sender, DataInputStream stream) {
         try {
             if (side == EnvType.SERVER) {
-                PlayerEntity player = (PlayerEntity) sender;
+                Player player = (PlayerEntity) sender;
                 if ("initRequest".equals(command)) {
                     final String[] triggerStrings = statementsToStrings(potentialTriggers);
                     final String[] actionStrings = statementsToStrings(potentialActions);

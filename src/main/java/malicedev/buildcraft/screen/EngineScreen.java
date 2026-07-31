@@ -6,7 +6,7 @@ import malicedev.buildcraft.packet.RequestSyncedBlockEntityUpdateC2SPacket;
 import malicedev.buildcraft.util.ScreenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.screen.ScreenHandler;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 

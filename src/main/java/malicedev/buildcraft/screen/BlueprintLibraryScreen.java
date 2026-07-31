@@ -5,12 +5,12 @@ import malicedev.buildcraft.item.BlueprintManager;
 import malicedev.buildcraft.screen.handler.BlueprintLibraryScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import org.lwjgl.opengl.GL11;
 
 public class BlueprintLibraryScreen extends HandledScreen {
     public final BlueprintLibraryBlockEntity blockEntity;
-    public final PlayerEntity player;
+    public final Player player;
 
     public ButtonWidget previousButton;
     public ButtonWidget nextButton;
@@ -18,7 +18,7 @@ public class BlueprintLibraryScreen extends HandledScreen {
     public ButtonWidget deleteButton;
     public ButtonWidget lockButton;
 
-    public BlueprintLibraryScreen(PlayerEntity player, BlueprintLibraryBlockEntity blockEntity) {
+    public BlueprintLibraryScreen(Player player, BlueprintLibraryBlockEntity blockEntity) {
         super(new BlueprintLibraryScreenHandler(player, blockEntity));
         this.blockEntity = blockEntity;
         this.player = player;

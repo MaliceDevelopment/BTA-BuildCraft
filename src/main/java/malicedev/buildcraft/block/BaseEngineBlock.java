@@ -16,8 +16,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -31,7 +31,7 @@ import net.modificationstation.stationapi.api.state.property.EnumProperty;
 import net.modificationstation.stationapi.api.state.property.Properties;
 import net.modificationstation.stationapi.api.template.block.TemplateBlockWithEntity;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
@@ -41,7 +41,7 @@ import java.util.Random;
         @EnvironmentInterface(value = EnvType.CLIENT, itf = BlockWithWorldRenderer.class),
         @EnvironmentInterface(value = EnvType.CLIENT, itf = BlockWithInventoryRenderer.class),
 })
-public abstract class BaseEngineBlock extends TemplateBlockWithEntity implements BlockWithInventoryRenderer, BlockWithWorldRenderer, Wrenchable, Debuggable {
+public abstract class BaseEngineBlock extends TemplateBlockWithEntity implements BlockWithInventoryRenderer, BlockWithWorldRenderer, IWrenchable, Debuggable {
     public static final EnumProperty<EnergyStage> ENERGY_STAGE_PROPERTY = EnumProperty.of("energy_stage", EnergyStage.class);
     public static final BooleanProperty PUMPING_PROPERTY = BooleanProperty.of("pumping");
     @Environment(EnvType.CLIENT)
@@ -72,7 +72,7 @@ public abstract class BaseEngineBlock extends TemplateBlockWithEntity implements
 
     // Wrenching
     @Override
-    public boolean wrenchRightClick(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         // Wrench + Sneaking = Disassemble
         if (wrenchMode == WrenchMode.MODE_WRENCH) {
             if (isSneaking) {
@@ -120,7 +120,7 @@ public abstract class BaseEngineBlock extends TemplateBlockWithEntity implements
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (world.getBlockEntity(x, y, z) instanceof BaseEngineBlockEntity engine) {
             player.sendMessage("Energy:" + engine.energy + ", Heat: " + engine.heat + ", RS:" + engine.isRedstonePowered + ", Prog:" + engine.progress);
         }
@@ -186,7 +186,7 @@ public abstract class BaseEngineBlock extends TemplateBlockWithEntity implements
 
     // Debug
     @Override
-    public void debug(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side) {
+    public void debug(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side) {
         if (world.getBlockEntity(x, y, z) instanceof BaseEngineBlockEntity engine) {
             System.out.println(engine);
             player.sendMessage(engine.toString());

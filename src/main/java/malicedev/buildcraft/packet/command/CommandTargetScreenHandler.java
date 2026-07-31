@@ -1,6 +1,6 @@
 package malicedev.buildcraft.packet.command;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.world.World;
 
@@ -14,7 +14,7 @@ public class CommandTargetScreenHandler extends CommandTarget{
     }
 
     @Override
-    public CommandReceiver handle(PlayerEntity player, DataInputStream data, World world) {
+    public CommandReceiver handle(Player player, DataInputStream data, World world) {
         ScreenHandler screenHandler = player.currentScreenHandler;
         if(screenHandler instanceof CommandReceiver){
             return (CommandReceiver) screenHandler;

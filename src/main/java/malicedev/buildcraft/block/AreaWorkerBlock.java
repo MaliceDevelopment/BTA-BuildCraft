@@ -5,7 +5,7 @@ import malicedev.buildcraft.block.entity.LandMarkerBlockEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public abstract class AreaWorkerBlock extends TemplateMachineBlock {
     public AreaWorkerBlock(Identifier identifier, Material material) {

@@ -10,7 +10,7 @@ import net.minecraft.world.BlockView;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
 import net.modificationstation.stationapi.api.template.block.TemplateBlock;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class RenderBlock extends TemplateBlock {
     private int renderMask = 0;

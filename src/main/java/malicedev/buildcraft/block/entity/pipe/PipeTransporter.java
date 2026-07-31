@@ -54,7 +54,7 @@ public abstract class PipeTransporter {
     }
 
     @Environment(EnvType.SERVER)
-    public void onBlockEntityUpdatePacket(ServerPlayerEntity player) {
+    public void onBlockEntityUpdatePacket(ServerPlayer player) {
     }
 
     public interface PipeTransporterFactory {

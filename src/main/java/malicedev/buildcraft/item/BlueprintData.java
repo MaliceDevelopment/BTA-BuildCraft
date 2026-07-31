@@ -6,7 +6,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.BlockRegistry;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.ArrayList;
 import java.util.Map;

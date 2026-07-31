@@ -5,7 +5,7 @@ import malicedev.buildcraft.block.entity.BlueprintLibraryBlockEntity;
 import malicedev.buildcraft.screen.handler.BlueprintLibraryScreenHandler;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.gui.screen.container.GuiHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
@@ -21,7 +21,7 @@ public class BlueprintLibraryBlock extends TemplateMachineBlock {
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (super.onUse(world, x, y, z, player)) {
             return true;
         }

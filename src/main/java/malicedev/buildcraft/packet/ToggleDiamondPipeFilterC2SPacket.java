@@ -3,7 +3,7 @@ package malicedev.buildcraft.packet;
 import malicedev.buildcraft.screen.handler.DiamondPipeScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
@@ -58,7 +58,7 @@ public class ToggleDiamondPipeFilterC2SPacket extends Packet implements ManagedP
 
     @Environment(EnvType.SERVER)
     public void handleServer(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
+        Player player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
         if (player.currentScreenHandler instanceof DiamondPipeScreenHandler diamondPipeHandler) {
             switch (filterIndex) {
                 case 0 -> diamondPipeHandler.pipe.filterMeta = value;

@@ -14,7 +14,7 @@ import malicedev.nyalib.capability.block.energyhandler.EnergyStorageBlockCapabil
 import malicedev.nyalib.capability.block.fluidhandler.FluidHandlerBlockCapability;
 import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import net.minecraft.block.entity.BlockEntity;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Collection;
 import java.util.LinkedList;

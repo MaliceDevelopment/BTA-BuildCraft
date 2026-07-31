@@ -1,9 +1,9 @@
 package malicedev.buildcraft.inventory.slot;
 
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 public class CombustionEngineFuelSlot extends Slot {
     public CombustionEngineFuelSlot(Inventory inventory, int index, int x, int y) {

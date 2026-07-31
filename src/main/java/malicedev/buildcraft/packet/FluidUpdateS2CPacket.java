@@ -8,7 +8,7 @@ import malicedev.buildcraft.block.entity.pipe.transporter.FluidRenderData;
 import malicedev.nyalib.fluid.FluidRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.world.World;
@@ -146,7 +146,7 @@ public class FluidUpdateS2CPacket extends Packet implements ManagedPacket<FluidU
 
     @Environment(EnvType.CLIENT)
     public void handleClient(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
+        Player player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
         World world = player.world;
 
         if (world.getBlockState(x,y,z).getBlock() instanceof PipeBlock pipeBlock && world.getBlockEntity(x,y,z) instanceof PipeBlockEntity pipe && pipe.transporter instanceof FluidPipeTransporter transporter) {

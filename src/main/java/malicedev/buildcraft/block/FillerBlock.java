@@ -5,8 +5,8 @@ import malicedev.buildcraft.block.entity.FillerBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.item.ItemPlacementContext;
@@ -39,7 +39,7 @@ public class FillerBlock extends TemplateMachineBlock implements Debuggable {
     }
 
     @Override
-    public void debug(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side) {
+    public void debug(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side) {
         BlockState state = world.getBlockState(x,y,z);
 
         world.setBlockState(x,y,z, state.cycle(FILLER_PATTERN));

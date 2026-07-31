@@ -7,7 +7,7 @@ import malicedev.buildcraft.util.RenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.client.StationRenderAPI;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
 import org.lwjgl.opengl.GL11;

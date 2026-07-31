@@ -5,7 +5,7 @@ import malicedev.buildcraft.block.entity.pipe.pluggable.PipePluggable;
 import malicedev.buildcraft.registry.PluggableRegistry;
 import malicedev.buildcraft.util.ConnectionMatrix;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

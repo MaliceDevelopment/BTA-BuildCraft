@@ -29,7 +29,7 @@ import net.modificationstation.stationapi.api.client.StationRenderAPI;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.lwjgl.opengl.GL11;
 
 public class PipeBlockEntityRenderer extends BlockEntityRenderer {

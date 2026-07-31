@@ -13,7 +13,7 @@ import net.minecraft.block.PlantBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.modificationstation.stationapi.api.StationAPI;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Random;
 import java.util.Set;

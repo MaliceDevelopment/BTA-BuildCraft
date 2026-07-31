@@ -8,11 +8,11 @@ import malicedev.nyalib.capability.CapabilityHelper;
 import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ItemUtil {
     private static final List<Direction> DIRECTIONS = new ObjectArrayList<>(Direction.values());
 
-    public static void dropTryIntoPlayerInventory(World world, int x, int y, int z, ItemStack stack, PlayerEntity player) {
+    public static void dropTryIntoPlayerInventory(World world, int x, int y, int z, ItemStack stack, Player player) {
         if (player != null) {
             player.inventory.addStack(stack);
             player.inventory.markDirty();

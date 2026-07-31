@@ -8,7 +8,7 @@ import malicedev.nyalib.block.DropInventoryOnBreak;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.gui.screen.container.GuiHelper;
@@ -44,7 +44,7 @@ public class BuilderBlock extends AreaWorkerBlock implements DropInventoryOnBrea
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (super.onUse(world, x, y, z, player)) {
             return true;
         }

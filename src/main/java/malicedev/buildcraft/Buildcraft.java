@@ -14,10 +14,10 @@ import malicedev.buildcraft.event.StatementRegisterEvent;
 import malicedev.buildcraft.item.*;
 import malicedev.buildcraft.util.ColorUtil;
 import net.fabricmc.api.ModInitializer;
-import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.core.block.Block;
-import net.minecraft.block.MapColor;
+//import net.minecraft.block.MapColor;
 import net.minecraft.core.block.material.Material;
+import net.minecraft.core.block.material.MaterialColor;
 import net.minecraft.core.item.Item;
 import net.modificationstation.stationapi.api.StationAPI;
 import net.modificationstation.stationapi.api.event.registry.BlockRegistryEvent;
@@ -29,11 +29,28 @@ import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.HalpLibe;
 import turniplabs.halplibe.event.defs.CommonEvents;
+import turniplabs.halplibe.helper.ItemBuilder;
+import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.util.dependency.Key;
+
+import java.util.Properties;
 
 public class Buildcraft implements ModInitializer {
 	public static final String MOD_ID = HalpLibe.registerMod("buildcraft", true);
 	public static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static int blockId;
+	public static int itemId;
+	static {
+		Properties prop = new Properties();
+		prop.setProperty("starting_block_id","8300");
+		prop.setProperty("starting_item_id","25700");
+		ConfigHandler config = new ConfigHandler(MOD_ID,prop);
+
+		blockId = config.getInt("starting_block_id");
+		itemId = config.getInt("starting_item_id");
+
+		config.updateConfig();
+	}
 
 	@Override
 	public void onInitialize() {
@@ -52,7 +69,7 @@ public class Buildcraft implements ModInitializer {
 
 	}
 
-
+	public String NAMESPACE = "buildcraft:";
 
     public static Item wrench;
     public static Item woodenGear;
@@ -165,29 +182,29 @@ public class Buildcraft implements ModInitializer {
 
 
     public void registerItems() {
-        wrench = new BuildcraftWrenchItem(NAMESPACE.id("wrench")).setTranslationKey(NAMESPACE, "wrench");
-        woodenGear = new TemplateItem(NAMESPACE.id("wooden_gear")).setTranslationKey(NAMESPACE, "wooden_gear");
-        stoneGear = new TemplateItem(NAMESPACE.id("stone_gear")).setTranslationKey(NAMESPACE, "stone_gear");
-        ironGear = new TemplateItem(NAMESPACE.id("iron_gear")).setTranslationKey(NAMESPACE, "iron_gear");
-        goldGear = new TemplateItem(NAMESPACE.id("golden_gear")).setTranslationKey(NAMESPACE, "golden_gear");
-        diamondGear = new TemplateItem(NAMESPACE.id("diamond_gear")).setTranslationKey(NAMESPACE, "diamond_gear");
-        template = new BuilderTemplateItem(NAMESPACE.id("template")).setTranslationKey(NAMESPACE, "template");
-        blueprint = new BuilderBlueprintItem(NAMESPACE.id("blueprint")).setTranslationKey(NAMESPACE, "blueprint");
-        pipeSealant = new TemplateItem(NAMESPACE.id("pipe_sealant")).setTranslationKey(NAMESPACE, "pipe_sealant");
+        wrench = new BuildcraftWrenchItem(NAMESPACE.id("wrench", NAMESPACE+"item/"+"wrench");
+        woodenGear = new ItemBuilder(MOD_ID).build(new Item("wooden_gear", NAMESPACE+"item/"+"wooden_gear",itemId++));
+        stoneGear = new ItemBuilder(MOD_ID).build(new Item("stone_gear", NAMESPACE+"item/"+"stone_gear",itemId++));
+        ironGear = new ItemBuilder(MOD_ID).build(new Item("iron_gear", NAMESPACE+"item/"+"iron_gear",itemId++));
+        goldGear = new ItemBuilder(MOD_ID).build(new Item("golden_gear", NAMESPACE+"item/"+"golden_gear",itemId++));
+        diamondGear = new ItemBuilder(MOD_ID).build(new Item("diamond_gear", NAMESPACE+"item/"+ "diamond_gear",itemId++));
+        template = new BuilderTemplateItem(NAMESPACE.id("template", NAMESPACE+"item/"+ "template"));
+        blueprint = new BuilderBlueprintItem(NAMESPACE.id("blueprint", NAMESPACE+"item/"+ "blueprint"));
+        pipeSealant = new ItemBuilder(MOD_ID).build(new Item("pipe_sealant", NAMESPACE+"item/"+ "pipe_sealant",itemId++));
 
-        redPipeWire = new PipeWireItem(NAMESPACE.id("red_pipe_wire")).setTranslationKey(NAMESPACE, "red_pipe_wire");
-        bluePipeWire = new PipeWireItem(NAMESPACE.id("blue_pipe_wire")).setTranslationKey(NAMESPACE, "blue_pipe_wire");
-        greenPipeWire = new PipeWireItem(NAMESPACE.id("green_pipe_wire")).setTranslationKey(NAMESPACE, "green_pipe_wire");
-        yellowPipeWire = new PipeWireItem(NAMESPACE.id("yellow_pipe_wire")).setTranslationKey(NAMESPACE, "yellow_pipe_wire");
+        redPipeWire = new ItemBuilder(MOD_ID).build(new PipeWireItem("red_pipe_wire", NAMESPACE+"item/"+ "red_pipe_wire",itemId++));
+        bluePipeWire = new ItemBuilder(MOD_ID).build(new PipeWireItem("blue_pipe_wire", NAMESPACE+"item/"+ "blue_pipe_wire",itemId++));
+        greenPipeWire = new ItemBuilder(MOD_ID).build(new PipeWireItem("green_pipe_wire", NAMESPACE+"item/"+ "green_pipe_wire",itemId++));
+        yellowPipeWire = new ItemBuilder(MOD_ID).build(new PipeWireItem("yellow_pipe_wire", NAMESPACE+"item/"+ "yellow_pipe_wire",itemId++));
 
-        redstoneChipset = new TemplateItem(NAMESPACE.id("redstone_chipset")).setTranslationKey(NAMESPACE, "redstone_chipset");
-        redstoneIronChipset = new TemplateItem(NAMESPACE.id("redstone_iron_chipset")).setTranslationKey(NAMESPACE, "redstone_iron_chipset");
-        redstoneGoldenChipset = new TemplateItem(NAMESPACE.id("redstone_golden_chipset")).setTranslationKey(NAMESPACE, "redstone_golden_chipset");
-        redstoneDiamondChipset = new TemplateItem(NAMESPACE.id("redstone_diamond_chipset")).setTranslationKey(NAMESPACE, "redstone_diamond_chipset");
-        redstoneEmeraldChipset = new TemplateItem(NAMESPACE.id("redstone_emerald_chipset")).setTranslationKey(NAMESPACE, "redstone_emerald_chipset");
-        redstoneGlowstoneChipset = new TemplateItem(NAMESPACE.id("redstone_glowstone_chipset")).setTranslationKey(NAMESPACE, "redstone_glowstone_chipset");
-        pulsatingChipset = new TemplateItem(NAMESPACE.id("pulsating_chipset")).setTranslationKey(NAMESPACE, "pulsating_chipset");
-        redstoneCompChipset = new TemplateItem(NAMESPACE.id("redstone_comp_chipset")).setTranslationKey(NAMESPACE, "redstone_comp_chipset");
+        redstoneChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_chipset", NAMESPACE+"item/"+ "redstone_chipset",itemId++));
+        redstoneIronChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_iron_chipset", NAMESPACE+"item/"+ "redstone_iron_chipset",itemId++));
+        redstoneGoldenChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_golden_chipset", NAMESPACE+"item/"+ "redstone_golden_chipset",itemId++));
+        redstoneDiamondChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_diamond_chipset", NAMESPACE+"item/"+ "redstone_diamond_chipset",itemId++));
+        redstoneEmeraldChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_emerald_chipset", NAMESPACE+"item/"+ "redstone_emerald_chipset",itemId++));
+        redstoneGlowstoneChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_glowstone_chipset", NAMESPACE+"item/"+ "redstone_glowstone_chipset",itemId++));
+        pulsatingChipset = new ItemBuilder(MOD_ID).build(new Item("pulsating_chipset", NAMESPACE+"item/"+ "pulsating_chipset",itemId++));
+        redstoneCompChipset = new ItemBuilder(MOD_ID).build(new Item("redstone_comp_chipset", NAMESPACE+"item/"+ "redstone_comp_chipset",itemId++));
 
         paintbrush = new PaintBrushItem(NAMESPACE.id("clean_paintbrush"), -1).setTranslationKey(NAMESPACE, "clean_paintbrush");
         for (int i = 0; i < ColorUtil.colors.length; i++) {
@@ -202,23 +219,23 @@ public class Buildcraft implements ModInitializer {
             filter[i] = new LensItem(i, true).setTranslationKey(NAMESPACE, ColorUtil.getName(i) + "_filter");
         }
 
-        plug = new PlugItem(NAMESPACE.id("plug")).setTranslationKey(NAMESPACE, "plug");
-        facade = new FacadeItem(NAMESPACE.id("facade")).setTranslationKey(NAMESPACE, "facade");
+        plug = new PlugItem(NAMESPACE.id("plug", NAMESPACE+"item/"+ "plug",itemId++));
+        facade = new FacadeItem(NAMESPACE.id("facade", NAMESPACE+"item/"+ "facade",itemId++));
 
         StationAPI.EVENT_BUS.post(new StatementRegisterEvent());
 
         gates = new Item[GateMaterial.VALUES.length * GateLogic.VALUES.length];
         for(int i = 0; i < GateMaterial.VALUES.length; i++){
             for(int j = 0; j < GateLogic.VALUES.length; j++){
-                gates[i + j] = new GateItem(GateMaterial.fromOrdinal(i), GateLogic.fromOrdinal(j)).setTranslationKey(NAMESPACE, GateItem.getIdentifier(GateMaterial.fromOrdinal(i), GateLogic.fromOrdinal(j)).path);
+                gates[i + j] = new GateItem(GateMaterial.fromOrdinal(i), GateLogic.fromOrdinal(j, NAMESPACE+"item/"+ GateItem.getIdentifier(GateMaterial.fromOrdinal(i), GateLogic.fromOrdinal(j)).path);
             }
         }
 
-        gateCopier = new GateCopierItem(NAMESPACE.id("gate_copier")).setTranslationKey(NAMESPACE, "gate_copier");
+        gateCopier = new GateCopierItem(NAMESPACE.id("gate_copier", NAMESPACE+"item/"+ "gate_copier",itemId++));
     }
 
     public void registerBlocks() {
-        pipeMaterial = new PipeMaterial(MapColor.LIGHT_GRAY);
+        pipeMaterial = new PipeMaterial(MaterialColor.LIGHT_GRAY);
 
         woodenPipeBehavior = new WoodenPipeBehavior();
         cobblestonePipeBehavior = new CobblestonePipeBehavior();

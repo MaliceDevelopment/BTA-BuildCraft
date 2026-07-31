@@ -9,7 +9,7 @@ import malicedev.nyalib.capability.block.energyhandler.EnergyStorageBlockCapabil
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.resource.language.TranslationStorage;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class TriggerEnergy extends BCStatement implements TriggerExternal {
     private final boolean high;

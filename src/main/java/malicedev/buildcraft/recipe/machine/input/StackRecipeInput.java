@@ -1,6 +1,6 @@
 package malicedev.buildcraft.recipe.machine.input;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 
 import java.util.List;
 

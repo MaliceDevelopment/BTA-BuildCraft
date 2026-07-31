@@ -6,7 +6,7 @@ import malicedev.buildcraft.api.transport.statement.StatementContainer;
 import malicedev.buildcraft.api.transport.statement.StatementParameter;
 import malicedev.buildcraft.api.transport.statement.TriggerExternal;
 import net.minecraft.block.entity.BlockEntity;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 // TODO: finish implementing
 public class TriggerControlMode extends BCStatement implements TriggerExternal {
 

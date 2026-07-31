@@ -4,7 +4,7 @@ import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.block.entity.pipe.PipeConnectionType;
 import malicedev.buildcraft.block.entity.pipe.PipeType;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class SandstonePipeBehavior extends PipeBehavior {
     @Override

@@ -7,7 +7,7 @@ import malicedev.buildcraft.api.transport.statement.StatementContainer;
 import malicedev.buildcraft.api.transport.statement.container.RedstoneStatementContainer;
 import malicedev.buildcraft.init.StatementListener;
 import net.minecraft.block.entity.BlockEntity;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Collection;
 import java.util.LinkedList;

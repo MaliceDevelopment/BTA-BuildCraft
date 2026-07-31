@@ -1,7 +1,7 @@
 package malicedev.buildcraft.packet;
 
 import malicedev.buildcraft.block.entity.SyncedBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.network.packet.Packet;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
@@ -29,7 +29,7 @@ public class RequestSyncedBlockEntityUpdateC2SPacket extends CoordinatesPacket i
 
     @Override
     public void apply(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
+        Player player = PlayerHelper.getPlayerFromPacketHandler(networkHandler);
         if(player.world.getBlockEntity(x, y, z) instanceof SyncedBlockEntity blockEntity) {
             blockEntity.sendNetworkUpdate();
         }

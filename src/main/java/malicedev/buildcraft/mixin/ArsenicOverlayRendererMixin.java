@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import malicedev.buildcraft.item.CustomItemRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.client.texture.Sprite;
 import net.modificationstation.stationapi.api.client.texture.SpriteAtlasTexture;
 import net.modificationstation.stationapi.impl.client.arsenic.renderer.render.ArsenicOverlayRenderer;

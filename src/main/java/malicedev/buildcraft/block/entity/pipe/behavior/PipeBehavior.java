@@ -20,10 +20,10 @@ import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import malicedev.nyalib.fluid.FluidStack;
 import malicedev.uniwrench.api.WrenchMode;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -187,7 +187,7 @@ public class PipeBehavior {
 
     }
 
-    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         return false;
     }
 

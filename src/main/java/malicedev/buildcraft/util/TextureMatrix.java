@@ -2,7 +2,7 @@ package malicedev.buildcraft.util;
 
 import malicedev.buildcraft.api.core.Serializable;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

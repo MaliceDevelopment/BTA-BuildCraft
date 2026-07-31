@@ -4,7 +4,7 @@ import malicedev.buildcraft.block.entity.LandMarkerBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -15,7 +15,7 @@ import net.modificationstation.stationapi.api.state.property.BooleanProperty;
 import net.modificationstation.stationapi.api.state.property.Properties;
 import net.modificationstation.stationapi.api.template.block.TemplateBlockWithEntity;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import net.modificationstation.stationapi.api.world.BlockStateView;
 
 public abstract class MarkerBlock extends TemplateBlockWithEntity {
@@ -104,7 +104,7 @@ public abstract class MarkerBlock extends TemplateBlockWithEntity {
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (super.onUse(world, x, y, z, player)) {
             return true;
         }

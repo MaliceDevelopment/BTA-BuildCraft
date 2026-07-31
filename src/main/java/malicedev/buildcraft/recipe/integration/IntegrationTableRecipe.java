@@ -3,7 +3,7 @@ package malicedev.buildcraft.recipe.integration;
 import malicedev.buildcraft.api.transport.gate.GateExpansion;
 import malicedev.buildcraft.item.GateItem;
 import malicedev.buildcraft.recipe.machine.input.RecipeInput;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 
 public class IntegrationTableRecipe {
     public final RecipeInput input;

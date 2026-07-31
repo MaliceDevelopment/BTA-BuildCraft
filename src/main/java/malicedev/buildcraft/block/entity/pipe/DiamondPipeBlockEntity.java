@@ -7,15 +7,15 @@ import malicedev.buildcraft.block.PipeBlock;
 import malicedev.nyalib.fluid.Fluid;
 import malicedev.nyalib.fluid.FluidBucket;
 import malicedev.nyalib.fluid.FluidRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.tag.TagKey;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.List;
 
@@ -138,7 +138,7 @@ public class DiamondPipeBlockEntity extends PipeBlockEntity implements Inventory
 
     // Inventory
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return super.canPlayerUse(player);
     }
 

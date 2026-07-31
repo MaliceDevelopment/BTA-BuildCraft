@@ -10,9 +10,9 @@ import malicedev.nyalib.capability.CapabilityHelper;
 import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Iterator;
 

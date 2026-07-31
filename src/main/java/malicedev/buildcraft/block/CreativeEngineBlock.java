@@ -2,7 +2,7 @@ package malicedev.buildcraft.block;
 
 import malicedev.buildcraft.block.entity.CreativeEngineBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.util.Identifier;
 
@@ -38,7 +38,7 @@ public class CreativeEngineBlock extends BaseEngineBlock {
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (!world.isRemote && player.getHand() == null) {
             if (world.getBlockEntity(x, y, z) instanceof CreativeEngineBlockEntity creativeEngineBlockEntity) {
                 creativeEngineBlockEntity.switchPowerMode(false, player);
@@ -49,7 +49,7 @@ public class CreativeEngineBlock extends BaseEngineBlock {
     }
 
     @Override
-    public void onBlockBreakStart(World world, int x, int y, int z, PlayerEntity player) {
+    public void onBlockBreakStart(World world, int x, int y, int z, Player player) {
         if (!world.isRemote && player.getHand() == null) {
             if (world.getBlockEntity(x, y, z) instanceof CreativeEngineBlockEntity creativeEngineBlockEntity) {
                 creativeEngineBlockEntity.switchPowerMode(true, player);

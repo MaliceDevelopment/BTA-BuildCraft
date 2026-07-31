@@ -1,6 +1,6 @@
 package malicedev.buildcraft.api.transport.statement;
 
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public interface TriggerExternalOverride {
     enum Result {

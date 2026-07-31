@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class RobotEntityRenderer extends EntityRenderer {

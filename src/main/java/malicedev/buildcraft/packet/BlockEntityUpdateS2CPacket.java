@@ -2,7 +2,7 @@ package malicedev.buildcraft.packet;
 
 import malicedev.buildcraft.api.core.Serializable;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.network.NetworkHandler;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.States;
@@ -60,7 +60,7 @@ public class BlockEntityUpdateS2CPacket extends UpdatePacket implements ManagedP
 
     @Override
     public void apply(NetworkHandler networkHandler) {
-        PlayerEntity player = PlayerHelper.getPlayerFromGame();
+        Player player = PlayerHelper.getPlayerFromGame();
         if(targetExists(player.world) && getTarget(player.world) instanceof Serializable serializable){
             DataInputStream playbackStream = new DataInputStream(new ByteArrayInputStream(dataBuffer));
             try {

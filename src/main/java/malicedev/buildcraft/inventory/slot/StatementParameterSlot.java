@@ -2,7 +2,7 @@ package malicedev.buildcraft.inventory.slot;
 
 import malicedev.buildcraft.api.transport.statement.StatementParameter;
 import malicedev.buildcraft.screen.AdvancedInterfaceScreen;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlas;
 
 public abstract class StatementParameterSlot extends AdvancedSlot{

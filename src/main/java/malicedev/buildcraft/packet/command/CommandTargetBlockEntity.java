@@ -1,7 +1,7 @@
 package malicedev.buildcraft.packet.command;
 
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.world.World;
 
 import java.io.DataInputStream;
@@ -15,7 +15,7 @@ public class CommandTargetBlockEntity extends CommandTarget{
     }
 
     @Override
-    public CommandReceiver handle(PlayerEntity player, DataInputStream data, World world) {
+    public CommandReceiver handle(Player player, DataInputStream data, World world) {
         try {
             int x = data.readInt();
             int y = data.readInt();

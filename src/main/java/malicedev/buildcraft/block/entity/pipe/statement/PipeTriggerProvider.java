@@ -7,7 +7,7 @@ import malicedev.buildcraft.api.transport.statement.TriggerProvider;
 import malicedev.buildcraft.block.entity.pipe.PipeBlockEntity;
 import malicedev.buildcraft.block.entity.pipe.gate.Gate;
 import net.minecraft.block.entity.BlockEntity;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Collection;
 import java.util.LinkedList;

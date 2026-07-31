@@ -3,14 +3,14 @@ package malicedev.buildcraft.item;
 import malicedev.buildcraft.Buildcraft;
 import malicedev.buildcraft.api.core.PaintableBlock;
 import malicedev.buildcraft.util.ColorUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.stat.Stats;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class PaintBrushItem extends TemplateItem {
     public final int color;

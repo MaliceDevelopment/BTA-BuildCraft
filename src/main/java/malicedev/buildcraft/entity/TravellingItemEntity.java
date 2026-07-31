@@ -6,17 +6,17 @@ import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.network.packet.MessagePacket;
 import net.modificationstation.stationapi.api.server.entity.EntitySpawnDataProvider;
 import net.modificationstation.stationapi.api.server.entity.HasTrackingParameters;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.TriState;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 @HasTrackingParameters(updatePeriod = 1, sendVelocity = TriState.FALSE, trackingDistance = 32)
 public class TravellingItemEntity extends ItemEntity implements EntitySpawnDataProvider {
@@ -191,7 +191,7 @@ public class TravellingItemEntity extends ItemEntity implements EntitySpawnDataP
     }
 
     @Override
-    public void onPlayerInteraction(PlayerEntity player) {
+    public void onPlayerInteraction(Player player) {
 
     }
 

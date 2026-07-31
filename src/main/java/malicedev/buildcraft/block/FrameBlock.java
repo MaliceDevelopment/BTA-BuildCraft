@@ -22,7 +22,7 @@ import net.modificationstation.stationapi.api.state.property.BooleanProperty;
 import net.modificationstation.stationapi.api.state.property.Properties;
 import net.modificationstation.stationapi.api.template.block.TemplateBlock;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

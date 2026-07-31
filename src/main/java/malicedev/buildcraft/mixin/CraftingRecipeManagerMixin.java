@@ -4,7 +4,7 @@ import malicedev.buildcraft.Buildcraft;
 import malicedev.buildcraft.item.FacadeItem;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.recipe.CraftingRecipeManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

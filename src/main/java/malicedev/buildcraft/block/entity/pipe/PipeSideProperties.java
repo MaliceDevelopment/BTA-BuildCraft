@@ -3,11 +3,11 @@ package malicedev.buildcraft.block.entity.pipe;
 import malicedev.buildcraft.block.entity.pipe.pluggable.PipePluggable;
 import malicedev.buildcraft.registry.PluggableRegistry;
 import malicedev.buildcraft.util.ItemUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class PipeSideProperties {
     PipePluggable[] pluggables = new PipePluggable[Direction.values().length];
@@ -20,7 +20,7 @@ public class PipeSideProperties {
         pluggables = newPluggables;
     }
 
-    public boolean dropItem(PipeBlockEntity pipe, Direction direction, PlayerEntity player){
+    public boolean dropItem(PipeBlockEntity pipe, Direction direction, Player player){
         boolean result = false;
         PipePluggable pluggable = pluggables[direction.ordinal()];
         if(pluggable != null){

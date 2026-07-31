@@ -24,7 +24,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.DataInputStream;

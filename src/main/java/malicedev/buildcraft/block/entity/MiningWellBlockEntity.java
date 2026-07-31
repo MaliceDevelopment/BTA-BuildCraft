@@ -14,7 +14,7 @@ import net.minecraft.block.LiquidBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Vec3i;
@@ -23,7 +23,7 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.block.States;
 import net.modificationstation.stationapi.api.registry.BlockRegistry;
 import net.modificationstation.stationapi.api.tag.TagKey;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.ArrayList;
 import java.util.List;

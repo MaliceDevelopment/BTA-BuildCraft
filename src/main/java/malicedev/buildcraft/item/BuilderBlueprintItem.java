@@ -1,6 +1,6 @@
 package malicedev.buildcraft.item;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.client.item.CustomTooltipProvider;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;

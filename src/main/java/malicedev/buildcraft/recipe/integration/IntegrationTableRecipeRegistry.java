@@ -1,7 +1,7 @@
 package malicedev.buildcraft.recipe.integration;
 
 import malicedev.buildcraft.Buildcraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.HashMap;

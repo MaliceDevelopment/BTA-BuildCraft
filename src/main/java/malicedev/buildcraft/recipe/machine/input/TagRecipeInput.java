@@ -1,6 +1,6 @@
 package malicedev.buildcraft.recipe.machine.input;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
 import net.modificationstation.stationapi.api.registry.RegistryEntryList;
 import net.modificationstation.stationapi.api.tag.TagKey;

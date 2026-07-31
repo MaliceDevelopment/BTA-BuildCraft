@@ -12,8 +12,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -24,7 +24,7 @@ import net.modificationstation.stationapi.api.item.ItemPlacementContext;
 import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.state.property.Properties;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public class RefineryBlock extends TemplateMachineBlock {
     public float[][][] bounds = new float[3][3][2];
@@ -89,7 +89,7 @@ public class RefineryBlock extends TemplateMachineBlock {
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if(world.getBlockEntity(x, y, z) instanceof RefineryBlockEntity blockEntity){
             IndexRaycastResult raycastResult = raycastTank(world, x, y, z, player);
             FluidStack tankStack = blockEntity.getFluid(raycastResult.index, null);
@@ -132,7 +132,7 @@ public class RefineryBlock extends TemplateMachineBlock {
 
     @Override
     public Box getBoundingBox(World world, int x, int y, int z) {
-        PlayerEntity player = PlayerHelper.getPlayerFromGame();
+        Player player = PlayerHelper.getPlayerFromGame();
 
         IndexRaycastResult raycastResult = raycastTank(world, x, y, z, player);
         if (raycastResult == null) {
@@ -156,7 +156,7 @@ public class RefineryBlock extends TemplateMachineBlock {
         }
     }
 
-    public IndexRaycastResult raycastTank(World world, int x, int y, int z, PlayerEntity player) {
+    public IndexRaycastResult raycastTank(World world, int x, int y, int z, Player player) {
         double distance = 5d;
 
         double eyeHeight = 0;

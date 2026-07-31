@@ -8,9 +8,9 @@ import malicedev.whatsthis.apiimpl.styles.LayoutStyle;
 import malicedev.whatsthis.config.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
 
@@ -31,7 +31,7 @@ public class BuildcraftProbeInfoProvider implements IProbeInfoProvider {
     }
 
     @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState state, IProbeHitData data) {
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, Player player, World world, BlockState state, IProbeHitData data) {
         BlockPos pos = data.getPos();
         Block block = state.getBlock();
         BlockEntity blockEntity = world.getBlockEntity(pos.x, pos.y, pos.z);

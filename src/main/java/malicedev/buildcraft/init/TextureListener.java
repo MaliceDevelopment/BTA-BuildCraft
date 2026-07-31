@@ -13,7 +13,7 @@ import malicedev.buildcraft.util.ColorUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.client.color.item.ItemColorProvider;
 import net.modificationstation.stationapi.api.client.event.color.item.ItemColorsRegisterEvent;
 import net.modificationstation.stationapi.api.client.event.render.model.ItemModelPredicateProviderRegistryEvent;

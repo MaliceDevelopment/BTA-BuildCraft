@@ -14,11 +14,11 @@ import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import malicedev.nyalib.fluid.FluidStack;
 import malicedev.uniwrench.api.WrenchMode;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import static net.modificationstation.stationapi.api.util.math.MathHelper.*;
 
@@ -185,7 +185,7 @@ public class WoodenPipeBehavior extends PipeBehavior implements IPipeTransportPo
     }
 
     @Override
-    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(PipeBlockEntity blockEntity, ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         Object2ObjectOpenHashMap<Direction, PipeConnectionType> connections = blockEntity.connections;
 
         // Find the current normal side

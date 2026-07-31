@@ -6,7 +6,7 @@ import malicedev.buildcraft.screen.handler.IntegrationTableScreenHandler;
 import malicedev.nyalib.block.DropInventoryOnBreak;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.gui.screen.container.GuiHelper;
 import net.modificationstation.stationapi.api.util.Identifier;
@@ -23,7 +23,7 @@ public class IntegrationTableBlock extends TemplateMachineBlock implements DropI
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (!world.isRemote) {
             if (world.getBlockEntity(x, y, z) instanceof IntegrationTableBlockEntity table) {
                 GuiHelper.openGUI(player, Buildcraft.NAMESPACE.id("integration_table"), table, new IntegrationTableScreenHandler(player, table));

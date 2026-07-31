@@ -14,14 +14,14 @@ import malicedev.buildcraft.util.ItemUtil;
 import malicedev.nyalib.item.block.ManagedItemHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.block.States;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -2,7 +2,7 @@ package malicedev.buildcraft.block.entity;
 
 import malicedev.buildcraft.api.energy.EnergyStage;
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.Nullable;
 
@@ -88,7 +88,7 @@ public class CreativeEngineBlockEntity  extends BaseEngineBlockEntity{
         return powerMode.maxPower;
     }
 
-    public void switchPowerMode(boolean reverse, @Nullable PlayerEntity player){
+    public void switchPowerMode(boolean reverse, @Nullable Player player){
         powerMode = reverse ? powerMode.getPrevious() : powerMode.getNext();
         energy = 0;
         if(player != null){

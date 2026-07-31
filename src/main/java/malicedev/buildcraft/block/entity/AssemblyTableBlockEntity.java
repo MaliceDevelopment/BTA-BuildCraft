@@ -12,14 +12,14 @@ import malicedev.nyalib.capability.CapabilityHelper;
 import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -310,7 +310,7 @@ public class AssemblyTableBlockEntity extends BlockEntity implements ILaserTarge
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return inventory.canPlayerUse(player);
     }
 

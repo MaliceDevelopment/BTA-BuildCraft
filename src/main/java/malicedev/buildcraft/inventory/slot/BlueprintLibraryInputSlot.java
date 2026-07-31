@@ -3,9 +3,9 @@ package malicedev.buildcraft.inventory.slot;
 import malicedev.buildcraft.item.BuilderBlueprintItem;
 import malicedev.buildcraft.item.BuilderTemplateItem;
 import malicedev.buildcraft.screen.handler.BlueprintLibraryScreenHandler;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 public class BlueprintLibraryInputSlot extends Slot {
     BlueprintLibraryScreenHandler handler;

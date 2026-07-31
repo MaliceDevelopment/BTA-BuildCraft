@@ -9,7 +9,7 @@ import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter;
 import malicedev.buildcraft.entity.TravellingItemEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.util.math.Box;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.List;
 

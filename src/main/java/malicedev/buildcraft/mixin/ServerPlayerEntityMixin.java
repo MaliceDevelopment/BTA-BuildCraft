@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
     @WrapOperation(method = "playerTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/ServerPlayerEntity;updateBlockEntity(Lnet/minecraft/block/entity/BlockEntity;)V"))
-    public void onBlockEntityUpdatePacket(ServerPlayerEntity player, BlockEntity blockEntity, Operation<Void> original) {
+    public void onBlockEntityUpdatePacket(ServerPlayer player, BlockEntity blockEntity, Operation<Void> original) {
         original.call(player, blockEntity);
 
         if (blockEntity instanceof DelayedBlockEntityUpdate delayedBlockEntityUpdate) {

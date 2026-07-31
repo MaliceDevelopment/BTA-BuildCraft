@@ -17,7 +17,7 @@ import malicedev.buildcraft.recipe.integration.IntegrationTableRecipeRegistry;
 import malicedev.buildcraft.recipe.machine.AssemblyTableRecipeRegistry;
 import malicedev.buildcraft.recipe.refinery.RefineryRecipeRegistry;
 import net.glasslauncher.mods.alwaysmoreitems.api.*;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.util.Identifier;
 

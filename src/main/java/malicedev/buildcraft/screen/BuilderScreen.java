@@ -8,21 +8,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.platform.Lighting;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class BuilderScreen extends HandledScreen {
     public BuilderBlockEntity blockEntity;
-    public PlayerEntity player;
+    public Player player;
 
     public CustomButtonWidget startButton;
     public CustomButtonWidget pauseButton;
     public CustomButtonWidget stopButton;
 
-    public BuilderScreen(PlayerEntity player, BuilderBlockEntity blockEntity) {
+    public BuilderScreen(Player player, BuilderBlockEntity blockEntity) {
         super(new BuilderScreenHandler(player, blockEntity));
         this.blockEntity = blockEntity;
         this.player = player;

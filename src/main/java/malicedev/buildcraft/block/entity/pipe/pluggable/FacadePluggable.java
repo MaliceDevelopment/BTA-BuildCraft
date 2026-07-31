@@ -7,12 +7,12 @@ import malicedev.buildcraft.item.FacadeItem;
 import malicedev.buildcraft.util.Constants;
 import malicedev.buildcraft.util.MatrixTransformation;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Box;
 import net.modificationstation.stationapi.api.registry.BlockRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

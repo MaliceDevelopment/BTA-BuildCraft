@@ -9,12 +9,12 @@ import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
 import malicedev.nyalib.item.block.ItemHandler;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.CraftingRecipeManager;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public class AutocraftingTableBlockEntity extends BlockEntity implements Inventory, ItemHandler {
@@ -244,7 +244,7 @@ public class AutocraftingTableBlockEntity extends BlockEntity implements Invento
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return inventory.canPlayerUse(player);
     }
 

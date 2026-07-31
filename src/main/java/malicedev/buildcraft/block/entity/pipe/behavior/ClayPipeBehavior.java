@@ -7,8 +7,8 @@ import malicedev.buildcraft.block.entity.pipe.transporter.ItemPipeTransporter.Ha
 import malicedev.buildcraft.entity.TravellingItemEntity;
 import malicedev.nyalib.capability.CapabilityHelper;
 import malicedev.nyalib.capability.block.itemhandler.ItemHandlerBlockCapability;
-import net.minecraft.item.ItemStack;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.util.helper.Direction;
 
 public class ClayPipeBehavior extends PipeBehavior {
     @Override

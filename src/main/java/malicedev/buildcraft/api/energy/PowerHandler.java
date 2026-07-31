@@ -2,7 +2,7 @@ package malicedev.buildcraft.api.energy;
 
 import malicedev.buildcraft.api.core.SafeTimeTracker;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 /**
  * The PowerHandler is similar to FluidTank in that it holds your power and

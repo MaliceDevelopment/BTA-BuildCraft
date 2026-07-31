@@ -30,8 +30,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -46,7 +46,7 @@ import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 import net.modificationstation.stationapi.api.template.block.TemplateBlockWithEntity;
 import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -188,7 +188,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
 
     // Wrenching
     @Override
-    public boolean wrenchRightClick(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         if (world.isRemote) {
             return true;
         }
@@ -242,7 +242,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
 
     @Override
     public Box getBoundingBox(World world, int x, int y, int z) {
-        PlayerEntity player = PlayerHelper.getPlayerFromGame();
+        Player player = PlayerHelper.getPlayerFromGame();
 
         PipeRaycastResult raycastResult = raycastPipe(world, x, y, z, player);
         if (raycastResult == null) {
@@ -337,7 +337,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
 
     }
 
-    public PipeRaycastResult raycastPipe(World world, int x, int y, int z, PlayerEntity player) {
+    public PipeRaycastResult raycastPipe(World world, int x, int y, int z, Player player) {
         double distance = 5d;
 
         double eyeHeight = 0;
@@ -467,7 +467,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
 
     // Debug
     @Override
-    public void debug(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side) {
+    public void debug(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side) {
         if (world.getBlockEntity(x, y, z) instanceof PipeBlockEntity pipe) {
             System.out.println(pipe);
             player.sendMessage(pipe.toString());
@@ -484,7 +484,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
     }
 
     @Override
-    public boolean onUse(World world, int x, int y, int z, PlayerEntity player) {
+    public boolean onUse(World world, int x, int y, int z, Player player) {
         if (!(world.getBlockEntity(x, y, z) instanceof PipeBlockEntity pipe)) {
             return false;
         }
@@ -549,7 +549,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
         return super.onUse(world, x, y, z, player);
     }
 
-    private boolean stripEquipment(World world, int x, int y, int z, PlayerEntity player, PipeBlockEntity pipe, Direction side) {
+    private boolean stripEquipment(World world, int x, int y, int z, Player player, PipeBlockEntity pipe, Direction side) {
         if (!world.isRemote) {
             Direction nSide = side;
 
@@ -570,7 +570,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
         return false;
     }
 
-    private boolean addOrStripPipePluggable(World world, int x, int y, int z, ItemStack stack, PlayerEntity player, Direction side, PipeBlockEntity pipe) {
+    private boolean addOrStripPipePluggable(World world, int x, int y, int z, ItemStack stack, Player player, Direction side, PipeBlockEntity pipe) {
         PipeRaycastResult raycastResult = raycastPipe(world, x, y, z, player);
 
         Direction placementSide = raycastResult != null && raycastResult.sideHit != null ? raycastResult.sideHit : side;
@@ -603,7 +603,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
         return false;
     }
 
-    private boolean addOrStripWire(PlayerEntity player, PipeBlockEntity pipe, PipeWire color) {
+    private boolean addOrStripWire(Player player, PipeBlockEntity pipe, PipeWire color) {
         if (addWire(pipe, color)) {
             player.getHand().count--;
             return true;
@@ -623,7 +623,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
         return false;
     }
 
-    private boolean stripWire(PipeBlockEntity pipe, PipeWire color, PlayerEntity player) {
+    private boolean stripWire(PipeBlockEntity pipe, PipeWire color, Player player) {
         if (pipe.wireSet[color.ordinal()]) {
             if (!pipe.world.isRemote) {
                 dropWire(color, pipe, player);
@@ -641,7 +641,7 @@ public class PipeBlock extends TemplateBlockWithEntity implements Wrenchable, De
         return false;
     }
 
-    private void dropWire(PipeWire pipeWire, PipeBlockEntity pipe, PlayerEntity player) {
+    private void dropWire(PipeWire pipeWire, PipeBlockEntity pipe, Player player) {
         ItemUtil.dropTryIntoPlayerInventory(pipe.world, pipe.x, pipe.y, pipe.z, pipeWire.getStack(), player);
     }
 

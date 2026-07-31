@@ -1,6 +1,6 @@
 package malicedev.buildcraft.util;
 
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;

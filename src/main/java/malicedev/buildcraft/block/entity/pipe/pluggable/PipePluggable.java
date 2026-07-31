@@ -5,10 +5,10 @@ import malicedev.buildcraft.client.render.PipePluggableDynamicRenderer;
 import malicedev.buildcraft.client.render.PipePluggableRenderer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Box;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public abstract class PipePluggable implements Serializable {
     public abstract ItemStack[] getDropItems(PipeBlockEntity pipe);

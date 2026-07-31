@@ -3,8 +3,8 @@ package malicedev.buildcraft.block;
 import malicedev.uniwrench.api.WrenchMode;
 import malicedev.uniwrench.api.Wrenchable;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.States;
 import net.modificationstation.stationapi.api.template.block.TemplateBlockWithEntity;
@@ -16,7 +16,7 @@ public abstract class TemplateMachineBlock extends TemplateBlockWithEntity imple
     }
 
     @Override
-    public boolean wrenchRightClick(ItemStack stack, PlayerEntity player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
+    public boolean wrenchRightClick(ItemStack stack, Player player, boolean isSneaking, World world, int x, int y, int z, int side, WrenchMode wrenchMode) {
         if (wrenchMode == WrenchMode.MODE_WRENCH) {
             if (isSneaking) {
                 int meta = world.getBlockMeta(x, y, z);

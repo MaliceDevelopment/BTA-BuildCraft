@@ -10,10 +10,10 @@ import malicedev.buildcraft.config.Config;
 import malicedev.buildcraft.packet.PowerUpdateS2CPacket;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.nbt.NbtCompound;
 import net.modificationstation.stationapi.api.network.packet.PacketHelper;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.Arrays;
 
@@ -258,7 +258,7 @@ public class EnergyPipeTransporter extends PipeTransporter {
             packet.overload = isOverloaded();
 
             for (var playerO : world.players) {
-                if (playerO instanceof PlayerEntity player && player.getDistance(x, y, z) <= Config.PIPE_CONFIG.pipeUpdateDistance) {
+                if (playerO instanceof Player player && player.getDistance(x, y, z) <= Config.PIPE_CONFIG.pipeUpdateDistance) {
                     PacketHelper.sendTo(player, packet);
                 }
             }

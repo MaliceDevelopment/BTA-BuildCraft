@@ -1,11 +1,11 @@
 package malicedev.buildcraft.screen.handler;
 
 import malicedev.buildcraft.block.entity.ChuteBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.player.inventory.container.Container;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.player.inventory.slot.Slot;
 
 public class ChuteScreenHandler extends ScreenHandler {
 
@@ -34,7 +34,7 @@ public class ChuteScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean canUse(Player player) {
         return chuteBlockEntity.canPlayerUse(player);
     }
 }

@@ -1,6 +1,6 @@
 package malicedev.buildcraft.block.entity.pipe;
 
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 public enum ForgeDirection {
     /**

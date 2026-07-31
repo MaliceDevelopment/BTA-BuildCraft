@@ -14,7 +14,7 @@ import malicedev.buildcraft.block.entity.pipe.statement.ActionSingleEnergyPulse;
 import malicedev.buildcraft.init.StatementListener;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 
 import java.util.List;
 

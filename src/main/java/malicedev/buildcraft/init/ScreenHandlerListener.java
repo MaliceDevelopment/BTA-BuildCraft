@@ -7,8 +7,8 @@ import malicedev.buildcraft.screen.*;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
 import net.modificationstation.stationapi.api.client.gui.screen.GuiHandler;
 import net.modificationstation.stationapi.api.event.registry.GuiHandlerRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
@@ -35,27 +35,27 @@ public class ScreenHandlerListener {
         event.register(NAMESPACE.id("blueprint_library"), new GuiHandler((GuiHandler.ScreenFactoryNoMessage) this::openBlueprintLibrary, BlueprintLibraryBlockEntity::new));
     }
 
-    private Screen openBlueprintLibrary(PlayerEntity player, Inventory inventory) {
+    private Screen openBlueprintLibrary(Player player, Inventory inventory) {
         return new BlueprintLibraryScreen(player, (BlueprintLibraryBlockEntity) inventory);
     }
 
-    private Screen openBuilderScreen(PlayerEntity player, Inventory inventory) {
+    private Screen openBuilderScreen(Player player, Inventory inventory) {
         return new BuilderScreen(player, (BuilderBlockEntity) inventory);
     }
 
-    private Screen openArchitectTableScreen(PlayerEntity player, Inventory inventory) {
+    private Screen openArchitectTableScreen(Player player, Inventory inventory) {
         return new ArchitectTableScreen(player, (ArchitectTableBlockEntity) inventory);
     }
 
-    public Screen openDiamondPipeScreen(PlayerEntity player, Inventory inventory) {
+    public Screen openDiamondPipeScreen(Player player, Inventory inventory) {
         return new DiamondPipeScreen(player, (DiamondPipeBlockEntity) inventory);
     }
 
-    public Screen openChuteScreen(PlayerEntity playerEntity, Inventory inventory) {
+    public Screen openChuteScreen(Player playerEntity, Inventory inventory) {
         return new ChuteScreen(playerEntity.inventory, (ChuteBlockEntity) inventory);
     }
 
-    public Screen openStirlingEngineScreen(PlayerEntity playerEntity, Inventory inventory, MessagePacket message) {
+    public Screen openStirlingEngineScreen(Player playerEntity, Inventory inventory, MessagePacket message) {
         BlockEntity blockEntity = playerEntity.world.getBlockEntity(message.ints[1], message.ints[2], message.ints[3]);
         if(blockEntity instanceof StirlingEngineBlockEntity engine) {
             return new StirlingEngineScreen(playerEntity, engine);
@@ -63,7 +63,7 @@ public class ScreenHandlerListener {
         return null;
     }
 
-    public Screen openCombustionEngineScreen(PlayerEntity playerEntity, Inventory inventory,  MessagePacket message) {
+    public Screen openCombustionEngineScreen(Player playerEntity, Inventory inventory,  MessagePacket message) {
         BlockEntity blockEntity = playerEntity.world.getBlockEntity(message.ints[1], message.ints[2], message.ints[3]);
         if(blockEntity instanceof CombustionEngineBlockEntity engine) {
             return new CombustionEngineScreen(playerEntity, engine);
@@ -71,19 +71,19 @@ public class ScreenHandlerListener {
         return null;
     }
 
-    public Screen openAutocraftingTableScreen(PlayerEntity playerEntity, Inventory inventory) {
+    public Screen openAutocraftingTableScreen(Player playerEntity, Inventory inventory) {
         return new AutocraftingTableScreen(playerEntity, (AutocraftingTableBlockEntity) inventory);
     }
 
-    public Screen openAssemblyTableScreen(PlayerEntity playerEntity, Inventory inventory) {
+    public Screen openAssemblyTableScreen(Player playerEntity, Inventory inventory) {
         return new AssemblyTableScreen(playerEntity, (AssemblyTableBlockEntity) inventory);
     }
 
-    private Screen openIntegrationTableScreen(PlayerEntity player, Inventory inventory) {
+    private Screen openIntegrationTableScreen(Player player, Inventory inventory) {
         return new IntegrationTableScreen(player, (IntegrationTableBlockEntity) inventory);
     }
 
-    public Screen openGateScreen(PlayerEntity playerEntity, Inventory inventory) {
+    public Screen openGateScreen(Player playerEntity, Inventory inventory) {
         return new GateInterfaceScreen(playerEntity.inventory, (PipeBlockEntity) inventory);
     }
 }

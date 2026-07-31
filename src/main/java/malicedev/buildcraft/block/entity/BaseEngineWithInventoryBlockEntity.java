@@ -2,11 +2,11 @@ package malicedev.buildcraft.block.entity;
 
 import malicedev.buildcraft.inventory.SimpleInventory;
 import malicedev.nyalib.item.block.ItemHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.player.inventory.container.Container;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.modificationstation.stationapi.api.util.math.Direction;
+import net.minecraft.core.util.helper.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseEngineWithInventoryBlockEntity extends BaseEngineBlockEntity implements Inventory, ItemHandler {
@@ -48,7 +48,7 @@ public abstract class BaseEngineWithInventoryBlockEntity extends BaseEngineBlock
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return inventory.canPlayerUse(player);
     }
 
